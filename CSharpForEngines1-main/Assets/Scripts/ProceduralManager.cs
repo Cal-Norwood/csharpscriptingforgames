@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProceduralManager : MonoBehaviour
 {
@@ -9,12 +10,14 @@ public class ProceduralManager : MonoBehaviour
     // 1 = top, 2 = bot, 3 = left, 4 = right
     public GameObject[] corridors;
     public GameObject[] walls;
+    public Image[] mapNodes;
     public int horizontalChoice;
     public int verticalChoice;
     public int upCheck;
     public int downCheck;
     public int leftCheck;
     public int rightCheck;
+    public Vector2 activeRoomSize = new Vector2(12,12);
 
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
@@ -94,6 +97,25 @@ public class ProceduralManager : MonoBehaviour
 
             roomsVisited[verticalChoice][horizontalChoice] = true;
             roomMatrix[verticalChoice][horizontalChoice] = i;
+        }
+
+        for(int a = 0; a < 3; a++)
+        {
+            for(int b = 0; b < 3; b++)
+            {
+                if (roomsVisited[a][b] == true)
+                {
+                    if (a == 1)
+                    {
+                        mapNodes[a + b + 2].color = Color.white;
+                    }
+                    else if (a == 2)
+                    {
+                        mapNodes[a + b + 5].color = Color.white;
+                    }
+                    mapNodes[a + b].color = Color.white;
+                }
+            }
         }
         Debug.Log(roomMatrix[0][0]);
         Debug.Log(roomMatrix[0][1]);
