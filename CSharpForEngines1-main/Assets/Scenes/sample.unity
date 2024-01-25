@@ -483,7 +483,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193579487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3519096, y: 0.00000023841858, z: -10}
+  m_LocalPosition: {x: 3.3588886, y: 0.00000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6359,6 +6359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3a1b2213d7c0f4787fcc813216a095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scene: basement
   CM: {fileID: 610732982}
 --- !u!4 &1759175464
 Transform:

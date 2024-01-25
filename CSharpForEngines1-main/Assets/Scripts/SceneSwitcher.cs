@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-
+    public string Scene;
     public Animator CM;
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,6 @@ public class SceneSwitcher : MonoBehaviour
     IEnumerator WaitForFade()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("basement");
+        SceneManager.LoadScene(Scene);
     }
 }

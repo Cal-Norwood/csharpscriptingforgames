@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/basement.unity
     guid: 32698b33673790e49af41d036e2365bc
+  - enabled: 1
+    path: Assets/Scenes/dungeon.unity
+    guid: 9ff107188c9364c42b39343213c81dd5
   m_configObjects: {}
