@@ -8,6 +8,8 @@ public class ProceduralManager : MonoBehaviour
 
     public int roomCount;
     // 1 = top, 2 = bot, 3 = left, 4 = right
+    public GameObject mainRoom;
+    public GameObject player;
     public GameObject[] corridors;
     public GameObject[] walls;
     public Image[] mapNodes;
@@ -41,9 +43,33 @@ public class ProceduralManager : MonoBehaviour
         new List<bool> {false, false, false}
     };
 
+    public List<List<Image>> mapNodeGrid = new List<List<Image>>
+    {
+        new List<Image> { },
+        new List<Image> { },
+        new List<Image> { }
+    };
+
+    public List<List<Vector2>> roomPos = new List<List<Vector2>>
+    {
+        new List<Vector2> {new Vector2(-36, 32), new Vector2(0, 32), new Vector2(36, 32)},
+        new List<Vector2> {new Vector2(-36, 0), new Vector2(0, 0), new Vector2(36, 0)},
+        new List<Vector2> {new Vector2(-36, -32), new Vector2(0, -32), new Vector2(36, -32)}
+    };
+
     // Start is called before the first frame update
     void Start()
     {
+        mapNodeGrid[0].Add(mapNodes[0]);
+        mapNodeGrid[0].Add(mapNodes[1]);
+        mapNodeGrid[0].Add(mapNodes[2]);
+        mapNodeGrid[1].Add(mapNodes[3]);
+        mapNodeGrid[1].Add(mapNodes[4]);
+        mapNodeGrid[1].Add(mapNodes[5]);
+        mapNodeGrid[2].Add(mapNodes[6]);
+        mapNodeGrid[2].Add(mapNodes[7]);
+        mapNodeGrid[2].Add(mapNodes[8]);
+
         roomCount = Random.Range(3, 7);
         for(int i = 0; i < roomCount; i++)
         {
@@ -103,17 +129,15 @@ public class ProceduralManager : MonoBehaviour
         {
             for(int b = 0; b < 3; b++)
             {
-                if (roomsVisited[a][b] == true)
+                if (roomMatrix[a][b] >= 0)
                 {
-                    if (a == 1)
+                    if(roomMatrix[a][b] == 0)
                     {
-                        mapNodes[a + b + 2].color = Color.white;
+                        Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                        player.transform.Translate(roomPos[a][b].x, roomPos[a][b].y, 0);
                     }
-                    else if (a == 2)
-                    {
-                        mapNodes[a + b + 5].color = Color.white;
-                    }
-                    mapNodes[a + b].color = Color.white;
+
+                    mapNodeGrid[a][b].color = Color.white;
                 }
             }
         }
