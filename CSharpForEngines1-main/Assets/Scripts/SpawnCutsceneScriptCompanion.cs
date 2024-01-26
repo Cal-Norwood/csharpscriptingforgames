@@ -16,12 +16,22 @@ public class SpawnCutsceneScriptCompanion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(3.9f);
+        yield return new WaitForSeconds(4f);
+        Vector3 deltaPos = player.transform.position - VC.transform.position;
+        float timePassed = 0;
+        while (timePassed < 1f)
+        {
+            timePassed += Time.deltaTime;
+            VC.transform.position += deltaPos * Time.deltaTime;
+            VC.transform.position = new Vector3(VC.transform.position.x, VC.transform.position.y, -35);
+            yield return null;
+        }
+        VC.transform.position = player.transform.position;
         VC.Follow = player.transform;
     }
 }

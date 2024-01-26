@@ -20,6 +20,7 @@ public class ProceduralManager : MonoBehaviour
     public int leftCheck;
     public int rightCheck;
     public Vector2 activeRoomSize = new Vector2(12,12);
+    public bool roomsSpawned = false;
 
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
@@ -141,25 +142,61 @@ public class ProceduralManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(roomMatrix[0][0]);
-        Debug.Log(roomMatrix[0][1]);
-        Debug.Log(roomMatrix[0][2]);
-        Debug.Log(roomMatrix[1][0]);
-        Debug.Log(roomMatrix[1][1]);
-        Debug.Log(roomMatrix[1][2]);
-        Debug.Log(roomMatrix[2][0]);
-        Debug.Log(roomMatrix[2][1]);
-        Debug.Log(roomMatrix[2][2]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(roomsSpawned == false)
+        {
+            StartCoroutine(SpawnSequance());
+        }
     }
 
-    void SpawnSequance()
+    private IEnumerator SpawnSequance()
     {
-        
+        roomsSpawned = true;
+        for (int a = 0; a < 3; a++)
+        {
+            for (int b = 0; b < 3; b++)
+            {
+                if (roomMatrix[a][b] == 1)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+                if (roomMatrix[a][b] == 2)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+                if (roomMatrix[a][b] == 3)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+                if (roomMatrix[a][b] == 4)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+                if (roomMatrix[a][b] == 5)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+                if (roomMatrix[a][b] == 6)
+                {
+                    Debug.Log("working");
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                }
+            }
+        }
     }
 }
