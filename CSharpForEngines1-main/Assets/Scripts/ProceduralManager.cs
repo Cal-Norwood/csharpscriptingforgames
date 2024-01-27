@@ -19,7 +19,7 @@ public class ProceduralManager : MonoBehaviour
     public int downCheck;
     public int leftCheck;
     public int rightCheck;
-    public Vector2 activeRoomSize = new Vector2(12,12);
+    public Vector2 activeRoomSize = new Vector2(12, 12);
     public bool roomsSpawned = false;
     public Vector2 previousRoom = new Vector2(0, 0);
 
@@ -73,7 +73,7 @@ public class ProceduralManager : MonoBehaviour
         mapNodeGrid[2].Add(mapNodes[8]);
 
         roomCount = Random.Range(3, 7);
-        for(int i = 0; i < roomCount; i++)
+        for (int i = 0; i < roomCount; i++)
         {
             horizontalChoice = Random.Range(0, 3);
             verticalChoice = Random.Range(0, 3);
@@ -98,7 +98,7 @@ public class ProceduralManager : MonoBehaviour
             leftCheck = horizontalChoice - 1;
             rightCheck = horizontalChoice + 1;
 
-            for(int a = 0; a < 3; a++)
+            for (int a = 0; a < 3; a++)
             {
                 for (int b = 0; b < 3; b++)
                 {
@@ -127,13 +127,13 @@ public class ProceduralManager : MonoBehaviour
             roomMatrix[verticalChoice][horizontalChoice] = i;
         }
 
-        for(int a = 0; a < 3; a++)
+        for (int a = 0; a < 3; a++)
         {
-            for(int b = 0; b < 3; b++)
+            for (int b = 0; b < 3; b++)
             {
                 if (roomMatrix[a][b] >= 0)
                 {
-                    if(roomMatrix[a][b] == 0)
+                    if (roomMatrix[a][b] == 0)
                     {
                         Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
                         player.transform.Translate(roomPos[a][b].x, roomPos[a][b].y, 0);
@@ -154,7 +154,7 @@ public class ProceduralManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(roomsSpawned == false)
+        if (roomsSpawned == false)
         {
             StartCoroutine(SpawnSequance());
         }
@@ -181,6 +181,14 @@ public class ProceduralManager : MonoBehaviour
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
                             Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
                             Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                            if (roomMatrix[a][b] == 1)
+                            {
+                                int x = (int)previousRoom.x;
+                                int y = (int)previousRoom.y;
+                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                            }
                         }
                         if (a < previousRoom.x)
                         {
@@ -189,6 +197,14 @@ public class ProceduralManager : MonoBehaviour
                             Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
                             Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
                             Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                            if (roomMatrix[a][b] == 1)
+                            {
+                                int x = (int)previousRoom.x;
+                                int y = (int)previousRoom.y;
+                                Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[1].transform.rotation);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                            }
                         }
                         if (b > previousRoom.y)
                         {
@@ -196,24 +212,43 @@ public class ProceduralManager : MonoBehaviour
                             Instantiate(corridors[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[2].transform.position, corridors[2].transform.rotation);
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
                             Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
-                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[3].transform.rotation);
+                            if (roomMatrix[a][b] == 1)
+                            {
+                                int x = (int)previousRoom.x;
+                                int y = (int)previousRoom.y;
+                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
+                                Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[1].transform.rotation);
+
+                            }
                         }
                         if (b < previousRoom.y)
                         {
                             Debug.Log("working14");
                             Instantiate(corridors[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[3].transform.position, corridors[3].transform.rotation);
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
-                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
+                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[3].transform.rotation);
                             Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+                            if (roomMatrix[a][b] == 1)
+                            {
+                                int x = (int)previousRoom.x;
+                                int y = (int)previousRoom.y;
+                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                            }
                         }
                         previousRoom.x = a;
                         previousRoom.y = b;
+
                     }
-                    
+
                 }
             }
         }
     }
 }
+
 
 //TODO get walls working for first room
