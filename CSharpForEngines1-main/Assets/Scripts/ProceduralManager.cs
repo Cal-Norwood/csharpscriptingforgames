@@ -21,6 +21,7 @@ public class ProceduralManager : MonoBehaviour
     public int rightCheck;
     public Vector2 activeRoomSize = new Vector2(12,12);
     public bool roomsSpawned = false;
+    public Vector2 previousRoom = new Vector2(0, 0);
 
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
@@ -136,6 +137,12 @@ public class ProceduralManager : MonoBehaviour
                     {
                         Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
                         player.transform.Translate(roomPos[a][b].x, roomPos[a][b].y, 0);
+                        previousRoom.x = a;
+                        previousRoom.y = b;
+                        Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
+                        Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
+                        Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                        Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
                     }
 
                     mapNodeGrid[a][b].color = Color.white;
@@ -156,47 +163,57 @@ public class ProceduralManager : MonoBehaviour
     private IEnumerator SpawnSequance()
     {
         roomsSpawned = true;
-        for (int a = 0; a < 3; a++)
+        for (int i = 1; i < roomCount + 1; i++)
         {
-            for (int b = 0; b < 3; b++)
+            for (int a = 0; a < 3; a++)
             {
-                if (roomMatrix[a][b] == 1)
+                for (int b = 0; b < 3; b++)
                 {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
-                }
-                if (roomMatrix[a][b] == 2)
-                {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
-                }
-                if (roomMatrix[a][b] == 3)
-                {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
-                }
-                if (roomMatrix[a][b] == 4)
-                {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
-                }
-                if (roomMatrix[a][b] == 5)
-                {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
-                }
-                if (roomMatrix[a][b] == 6)
-                {
-                    Debug.Log("working");
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                    if (roomMatrix[a][b] == i)
+                    {
+                        Debug.Log(previousRoom);
+                        yield return new WaitForSeconds(0.5f);
+                        Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                        if (a > previousRoom.x)
+                        {
+                            Debug.Log("working11");
+                            Instantiate(corridors[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
+                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
+                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
+                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                        }
+                        if (a < previousRoom.x)
+                        {
+                            Debug.Log("working12");
+                            Instantiate(corridors[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[1].transform.position, corridors[1].transform.rotation);
+                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
+                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                        }
+                        if (b > previousRoom.y)
+                        {
+                            Debug.Log("working13");
+                            Instantiate(corridors[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[2].transform.position, corridors[2].transform.rotation);
+                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
+                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+                        }
+                        if (b < previousRoom.y)
+                        {
+                            Debug.Log("working14");
+                            Instantiate(corridors[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[3].transform.position, corridors[3].transform.rotation);
+                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
+                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
+                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+                        }
+                        previousRoom.x = a;
+                        previousRoom.y = b;
+                    }
+                    
                 }
             }
         }
     }
 }
+
+//TODO get walls working for first room

@@ -2224,6 +2224,8 @@ MonoBehaviour:
   leftCheck: 0
   rightCheck: 0
   activeRoomSize: {x: 0, y: 0}
+  roomsSpawned: 0
+  previousRoom: {x: 0, y: 0}
 --- !u!4 &1970238827
 Transform:
   m_ObjectHideFlags: 0
