@@ -1112,11 +1112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1458744341675243, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -7.72
       objectReference: {fileID: 0}
     - target: {fileID: 1458744341675243, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5.47
       objectReference: {fileID: 0}
     - target: {fileID: 1458744341675243, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1172,11 +1172,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2264368934126636991, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 7.72
       objectReference: {fileID: 0}
     - target: {fileID: 2264368934126636991, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -5.47
       objectReference: {fileID: 0}
     - target: {fileID: 2264368934126636991, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2226,6 +2226,16 @@ MonoBehaviour:
   activeRoomSize: {x: 0, y: 0}
   roomsSpawned: 0
   previousRoom: {x: 0, y: 0}
+  doors:
+  - {fileID: 7835970373557055378, guid: d5bfb845a166f994abf8f571a4735333, type: 3}
+  - {fileID: 6097626763386797555, guid: 591ec2d6f880014479b62a41b1392dcf, type: 3}
+  - {fileID: 4464894621682706238, guid: b348e0a58aad0ab42928977010b50918, type: 3}
+  - {fileID: 1874655476929143424, guid: b6b2cfb79ecdaed4baf69ffd4778e7f1, type: 3}
+  doorsOpen:
+  - {fileID: 5734126368541002951, guid: 8aba5371142a8044c8a43fe23cb4031e, type: 3}
+  - {fileID: 5429462925628133044, guid: 10f5580abef43e2429273f9136d10e32, type: 3}
+  - {fileID: 6710652834615136822, guid: 1619d94ba8727ac45a425e7a9aad0732, type: 3}
+  - {fileID: 8892052800602152502, guid: 8a81e5e7727264946b5253f69c952e81, type: 3}
 --- !u!4 &1970238827
 Transform:
   m_ObjectHideFlags: 0
