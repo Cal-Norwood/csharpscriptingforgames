@@ -24,6 +24,12 @@ public class ProceduralManager : MonoBehaviour
     public Vector2 previousRoom = new Vector2(0, 0);
     public GameObject[] doors;
     public GameObject[] doorsOpen;
+    public Transform[] dungeonSpawns;
+
+    public GameObject[] enemyDiff1;
+
+    public List<GameObject> activeDoors;
+    public List<GameObject> activeRooms;
 
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
@@ -137,7 +143,7 @@ public class ProceduralManager : MonoBehaviour
                 {
                     if (roomMatrix[a][b] == 0)
                     {
-                        Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                        activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
                         player.transform.Translate(roomPos[a][b].x, roomPos[a][b].y, 0);
                         previousRoom.x = a;
                         previousRoom.y = b;
@@ -174,13 +180,13 @@ public class ProceduralManager : MonoBehaviour
                     if (roomMatrix[a][b] == i)
                     {
                         yield return new WaitForSeconds(0.5f);
-                        Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity);
+                        activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
                         if (a > previousRoom.x)
                         {
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
                             Instantiate(corridors[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
-                            Instantiate(doors[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
+                            activeDoors.Add(Instantiate(doors[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
                             Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
@@ -197,7 +203,7 @@ public class ProceduralManager : MonoBehaviour
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
                             Instantiate(corridors[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[1].transform.position, corridors[1].transform.rotation);
-                            Instantiate(doors[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
+                            activeDoors.Add(Instantiate(doors[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
                             Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
                             Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
@@ -214,7 +220,7 @@ public class ProceduralManager : MonoBehaviour
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
                             Instantiate(corridors[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[2].transform.position, corridors[2].transform.rotation);
-                            Instantiate(doors[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
+                            activeDoors.Add(Instantiate(doors[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
                             Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
@@ -232,7 +238,7 @@ public class ProceduralManager : MonoBehaviour
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
                             Instantiate(corridors[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[3].transform.position, corridors[3].transform.rotation);
-                            Instantiate(doors[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
+                            activeDoors.Add(Instantiate(doors[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
                             Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
                             Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[3].transform.rotation);
@@ -252,6 +258,9 @@ public class ProceduralManager : MonoBehaviour
                 }
             }
         }
+
+        yield return new WaitForSeconds(10f);
+        Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position, Quaternion.identity);
     }
 }
 
