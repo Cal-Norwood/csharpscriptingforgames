@@ -8,6 +8,7 @@ public class EvilTree : MonoBehaviour
     public GameObject hole;
     public GameObject currentHole;
     public EnemyHandler EH;
+    public ProceduralManager PM;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,8 @@ public class EvilTree : MonoBehaviour
             EH.isInstantiated = true;
             EH.treeSpawnCount =+ 1;
         }
+
+        PM = GameObject.Find("ProceduralManager").GetComponent<ProceduralManager>();
     }
 
     // Update is called once per frame
@@ -59,10 +62,81 @@ public class EvilTree : MonoBehaviour
             yield return null;
             if (t >= 0.4)
             {
-                EH.treeSpawnCount -= 1;
-                Destroy(gameObject);
-                break;
+                if(EH.treeSpawnCount >= 15)
+                {
+                    EH.treeSpawnCount -= 1;
+                    Destroy(gameObject);
+                    break;
+                }
+                else
+                {
+                    gameObject.transform.localScale = new Vector3(0, 0, 0);
+                    Destroy(currentHole);
+                    yield return new WaitForSeconds(0.5f);
+                    List<int> randomSpawns = new List<int> { };
+                    int randomTry = Random.Range(0, 9);
+                    Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                    randomSpawns.Add(randomTry);
+
+                    while(true)
+                    {
+                        randomTry = Random.Range(0, 9);
+
+                        if(randomTry == randomSpawns[0])
+                        {
+                            randomTry = Random.Range(0, 9);
+                        }
+                        else
+                        {
+                            randomSpawns.Add(randomTry);
+                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            break;
+                        }
+                    }
+
+                    yield return new WaitForSeconds(0.2f);
+
+                    while (true)
+                    {
+                        randomTry = Random.Range(0, 9);
+
+                        if (randomTry == randomSpawns[0] || randomTry == randomSpawns[1])
+                        {
+                            randomTry = Random.Range(0, 9);
+                        }
+                        else
+                        {
+                            randomSpawns.Add(randomTry);
+                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            break;
+                        }
+                    }
+
+                    yield return new WaitForSeconds(0.2f);
+
+                    while (true)
+                    {
+                        randomTry = Random.Range(0, 9);
+
+                        if (randomTry == randomSpawns[0] || randomTry == randomSpawns[1] || randomTry == randomSpawns[2])
+                        {
+                            randomTry = Random.Range(0, 9);
+                        }
+                        else
+                        {
+                            randomSpawns.Add(randomTry);
+                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            break;
+                        }
+                    }
+                    EH.treeSpawnCount -= 1;
+                    Destroy(gameObject);
+                }
+                
             }
         }
     }
 }
+
+// for each hole instantiated instantiate a evil tree then start a coroutine for each one instantiated passing in a random parameter to determine wheteher it comes out the hole right or left
+

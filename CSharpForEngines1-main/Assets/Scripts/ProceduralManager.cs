@@ -31,6 +31,8 @@ public class ProceduralManager : MonoBehaviour
     public List<GameObject> activeDoors;
     public List<GameObject> activeRooms;
 
+    public GameObject currentRoom;
+
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
     {
@@ -166,6 +168,18 @@ public class ProceduralManager : MonoBehaviour
         {
             StartCoroutine(SpawnSequance());
         }
+
+        for(int i = 0; i < activeDoors.Count; i++)
+        {
+            if (activeDoors[i].activeInHierarchy == false)
+            {
+                currentRoom = activeRooms[i + 1];
+            }
+            if(activeDoors[i].activeInHierarchy == false && (i + 1 == activeDoors.Count - 1))
+            {
+                currentRoom = activeRooms[i];
+            }
+        }
     }
 
     private IEnumerator SpawnSequance()
@@ -259,8 +273,10 @@ public class ProceduralManager : MonoBehaviour
             }
         }
 
+        currentRoom = activeRooms[0];
+
         yield return new WaitForSeconds(10f);
-        Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position, Quaternion.identity);
+        Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity);
     }
 }
 
