@@ -40,6 +40,7 @@ public class EvilTree : MonoBehaviour
 
     private IEnumerator Cooldown()
     {
+        Debug.Log("woking");
         yield return new WaitForSeconds(6f);
         currentHole = Instantiate(hole, gameObject.transform.position + hole.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.5f);
@@ -159,7 +160,7 @@ public class EvilTree : MonoBehaviour
         if (dir == 0)
         {
             yield return new WaitForSeconds(2f);
-            Debug.Log("woking");
+            Debug.Log("woking1");
             float t = 0f;
             Transform treePos = itree.transform;
             Transform holePos = ihole.transform;
@@ -180,8 +181,10 @@ public class EvilTree : MonoBehaviour
         {
 
         }
+
+        splitCooldown = false;
     }
 }
 
-// for each hole instantiated instantiate a evil tree then start a coroutine for each one instantiated passing in a random parameter to determine wheteher it comes out the hole right or left
+// fix further ability uses 
 
