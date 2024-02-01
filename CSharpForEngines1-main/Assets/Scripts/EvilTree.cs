@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EvilTree : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class EvilTree : MonoBehaviour
     public GameObject currentHole;
     public EnemyHandler EH;
     public ProceduralManager PM;
+    public GameObject gameObjectPrefab;
+    public List<GameObject> instantiatedTrees;
+    public List<GameObject> instantiatedHoles;
+    public Vector3 instantionOffset = new Vector3(0, 2.5f, 0);
     // Start is called before the first frame update
     void Start()
     {
@@ -72,12 +78,16 @@ public class EvilTree : MonoBehaviour
                 {
                     gameObject.transform.localScale = new Vector3(0, 0, 0);
                     Destroy(currentHole);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.75f);
                     List<int> randomSpawns = new List<int> { };
                     int randomTry = Random.Range(0, 9);
-                    Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                    instantiatedHoles.Add(Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity));
+                    instantiatedTrees.Add(Instantiate(gameObjectPrefab, instantiatedHoles[0].transform.position + instantionOffset, quaternion.identity));
+                    instantiatedTrees[0].transform.localScale = new Vector3(0, 0, 0);
+                    StartCoroutine(DigUpHandler(0, instantiatedTrees[0], instantiatedHoles[0]));
                     randomSpawns.Add(randomTry);
 
+                    yield return new WaitForSeconds(0.2f);
                     while(true)
                     {
                         randomTry = Random.Range(0, 9);
@@ -89,7 +99,9 @@ public class EvilTree : MonoBehaviour
                         else
                         {
                             randomSpawns.Add(randomTry);
-                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            instantiatedHoles.Add(Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity));
+                            instantiatedTrees.Add(Instantiate(gameObjectPrefab, instantiatedHoles[1].transform.position + instantionOffset, quaternion.identity));
+                            StartCoroutine(DigUpHandler(0, instantiatedTrees[1], instantiatedHoles[1]));
                             break;
                         }
                     }
@@ -107,7 +119,9 @@ public class EvilTree : MonoBehaviour
                         else
                         {
                             randomSpawns.Add(randomTry);
-                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            instantiatedHoles.Add(Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity));
+                            instantiatedTrees.Add(Instantiate(gameObjectPrefab, instantiatedHoles[2].transform.position + instantionOffset, quaternion.identity));
+                            StartCoroutine(DigUpHandler(0, instantiatedTrees[2], instantiatedHoles[2]));
                             break;
                         }
                     }
@@ -125,15 +139,46 @@ public class EvilTree : MonoBehaviour
                         else
                         {
                             randomSpawns.Add(randomTry);
-                            Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity);
+                            instantiatedHoles.Add(Instantiate(hole, PM.dungeonSpawns[randomTry].transform.position + PM.currentRoom.transform.position + hole.transform.position, Quaternion.identity));
+                            instantiatedTrees.Add(Instantiate(gameObjectPrefab, instantiatedHoles[3].transform.position + instantionOffset, quaternion.identity));
+                            StartCoroutine(DigUpHandler(0, instantiatedTrees[3], instantiatedHoles[3]));
                             break;
                         }
                     }
                     EH.treeSpawnCount -= 1;
-                    Destroy(gameObject);
+                    break;
+                    //Destroy(gameObject);
                 }
                 
             }
+        }
+    }
+
+    private IEnumerator DigUpHandler(int dir, GameObject itree, GameObject ihole)
+    {
+        if (dir == 0)
+        {
+            yield return new WaitForSeconds(2f);
+            Debug.Log("woking");
+            float t = 0f;
+            Transform treePos = itree.transform;
+            Transform holePos = ihole.transform;
+            while (true)
+            {
+                t += Time.deltaTime;
+                itree.transform.position = new Vector3(itree.transform.position.x, Mathf.Lerp(treePos.position.y, holePos.position.y + 2, t / 10f), itree.transform.position.z);
+                itree.transform.position = new Vector3(Mathf.Lerp(treePos.position.x, holePos.position.x - 2, t / 10f), itree.transform.position.y, itree.transform.position.z);
+                itree.transform.localScale = new Vector3(Mathf.Lerp(treePos.localScale.x, 0.75f, t / 0.4f), Mathf.Lerp(treePos.localScale.y, 0.75f, t / 0.4f));
+                yield return null;
+                if (t >= 10)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+
         }
     }
 }

@@ -102,3 +102,7 @@ MonoBehaviour:
   currentHole: {fileID: 0}
   EH: {fileID: 0}
   PM: {fileID: 0}
+  gameObjectPrefab: {fileID: 5099875090793544052}
+  instantiatedTrees: []
+  instantiatedHoles: []
+  instantionOffset: {x: 0, y: -2.5, z: -1}
