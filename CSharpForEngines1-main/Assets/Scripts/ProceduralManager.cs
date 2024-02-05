@@ -25,6 +25,8 @@ public class ProceduralManager : MonoBehaviour
     public GameObject[] doors;
     public GameObject[] doorsOpen;
     public Transform[] dungeonSpawns;
+    public EnemyHandler EH;
+    public bool roomSpawn = true;
 
     public GameObject[] enemyDiff1;
 
@@ -32,6 +34,8 @@ public class ProceduralManager : MonoBehaviour
     public List<GameObject> activeRooms;
 
     public GameObject currentRoom;
+
+    public List<bool> roomReady;
 
     // 1 = room, c = corridor, -1 = empty
     public List<List<int>> roomMatrix = new List<List<int>>
@@ -180,6 +184,11 @@ public class ProceduralManager : MonoBehaviour
                 currentRoom = activeRooms[i];
             }
         }
+
+        if(roomReady[0] == true)
+        {
+            RoomOne();
+        }
     }
 
     private IEnumerator SpawnSequance()
@@ -275,8 +284,26 @@ public class ProceduralManager : MonoBehaviour
 
         currentRoom = activeRooms[0];
 
-        yield return new WaitForSeconds(10f);
-        Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(4f);
+        roomReady.Add(true);
+    }
+
+    void RoomOne()
+    {
+        if(roomSpawn == true)
+        {
+            Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity);
+            EH.treeSpawnCount += 1;
+            roomSpawn = false;
+        }
+
+        if (EH.treeSpawnCount <= 0)
+        {
+            roomReady[0] = false;
+            activeDoors[0].SetActive(false);
+            roomReady.Add(true);
+            roomSpawn = true;
+        }
     }
 }
 
