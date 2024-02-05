@@ -187,7 +187,7 @@ public class ProceduralManager : MonoBehaviour
 
         if(roomReady[0] == true)
         {
-            RoomOne();
+            StartCoroutine(RoomOne());
         }
     }
 
@@ -288,7 +288,7 @@ public class ProceduralManager : MonoBehaviour
         roomReady.Add(true);
     }
 
-    void RoomOne()
+    private IEnumerator RoomOne()
     {
         if(roomSpawn == true)
         {
@@ -300,6 +300,7 @@ public class ProceduralManager : MonoBehaviour
         if (EH.treeSpawnCount <= 0)
         {
             roomReady[0] = false;
+            yield return new WaitForSeconds(1);
             activeDoors[0].SetActive(false);
             roomReady.Add(true);
             roomSpawn = true;

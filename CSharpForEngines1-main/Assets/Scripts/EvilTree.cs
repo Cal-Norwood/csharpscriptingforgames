@@ -43,17 +43,10 @@ public class EvilTree : MonoBehaviour
             StartCoroutine(Cooldown());
             splitCooldown = true;
         }
-
-        if (moveBool == false && abilityPlaying == false)
-        {
-            moveBool = true;
-            StartCoroutine(TreeDash());
-        }
     }
 
     private IEnumerator Cooldown()
     {
-        moveBool = true;
         abilityPlaying = true;
         yield return new WaitForSeconds(0.5f);
         currentHole = Instantiate(hole, gameObject.transform.position + hole.transform.position, Quaternion.identity);
@@ -173,7 +166,6 @@ public class EvilTree : MonoBehaviour
 
     private IEnumerator DigUpHandler(int dir, GameObject itree, GameObject ihole)
     {
-        moveBool = true;
         if (dir == 0)
         {
             yield return new WaitForSeconds(2f);
@@ -182,7 +174,6 @@ public class EvilTree : MonoBehaviour
             Transform holePos = ihole.transform;
             while (true)
             {
-                moveBool = true;
                 itree.GetComponent<EvilTree>().treeHealth = treeHealth / 4;
                 t += Time.deltaTime;
                 itree.transform.position = new Vector3(itree.transform.position.x, Mathf.Lerp(treePos.position.y, holePos.position.y + 2, t / 10f), itree.transform.position.z);
@@ -200,10 +191,6 @@ public class EvilTree : MonoBehaviour
 
         }
 
-        foreach(GameObject g in instantiatedTrees)
-        {
-            g.GetComponent<EvilTree>().moveBool = false;
-        }
         anim.enabled = true;
         EH.treeSpawnCount -= 1;
         Destroy(gameObject);
@@ -241,46 +228,12 @@ public class EvilTree : MonoBehaviour
         }
     }
 
-    private IEnumerator TreeDash()
-    {
-        anim.Play("TreeWalk");
-        yield return new WaitForSeconds(1.5f);
-        playerPos = player.transform.position - transform.position;
-        gameObject.GetComponent<Rigidbody2D>().velocity = playerPos * 2;
-
-        while (true)
-        {
-            if(abilityPlaying == true)
-            {
-                anim.enabled = false;
-                gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                break;
-            }
-
-            if (hitWall == true)
-            {
-                hitWall = false;
-                break;
-            }
-            yield return null;
-        }
-
-        if (abilityPlaying == true)
-        {
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            StopCoroutine(TreeDash());
-        }
-
-        anim.enabled = false;
-        anim.enabled = true;
-        yield return new WaitForSeconds(2);
-        moveBool = false;
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         hitWall = true;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }
+
+//Change ass movement to procedural
 
