@@ -1897,7 +1897,8 @@ MonoBehaviour:
   treeSpawnCount: 0
   ET: {fileID: 0}
   PM: {fileID: 1970238826}
-  assignVariablesAtSpawn: 1
+  spawnedEnemies: []
+  gameObjectPrefab: {fileID: 5099875090793544052, guid: f9b13dff4419758458fcf23377896004, type: 3}
 --- !u!1 &1519393398
 GameObject:
   m_ObjectHideFlags: 0
