@@ -292,7 +292,7 @@ public class ProceduralManager : MonoBehaviour
     {
         if(roomSpawn == true)
         {
-            Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity);
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
             EH.treeSpawnCount += 1;
             roomSpawn = false;
         }

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 8055509603165781738}
   - component: {fileID: 1638362955203881185}
   - component: {fileID: 2635787344589929662}
+  - component: {fileID: 2846853488769288552}
+  - component: {fileID: 2659681710550918689}
   m_Layer: 7
   m_Name: EvilTree
   m_TagString: Enemy
@@ -75,9 +77,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2026633695
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -6825669177823260549, guid: 9af18cac74fb5e747a8f73d072f9314c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -109,14 +111,14 @@ MonoBehaviour:
   gameObjectPrefab: {fileID: 5099875090793544052}
   instantiatedTrees: []
   instantiatedHoles: []
-  instantionOffset: {x: 0, y: -2.5, z: -1}
+  instantionOffset: {x: 0, y: -2.5, z: 0}
   player: {fileID: 0}
   treeHealth: 250
-  playerPos: {x: 0, y: 0, z: 0}
-  moveBool: 0
-  hitWall: 0
   wallCollider: {fileID: 8278813337296366218}
   anim: {fileID: 2635787344589929662}
+  handlerInstantiated: 0
+  treeHandler: {fileID: 5735166398415946999, guid: d35091a8da48e2e4885db1b618691f22, type: 3}
+  navAgent: {fileID: 0}
 --- !u!61 &8278813337296366218
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -255,3 +257,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &2846853488769288552
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099875090793544052}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 2.640625
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 5.4375
+  m_BaseOffset: 2.71875
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &2659681710550918689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099875090793544052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e39f6090724e4a4a8aadeb042afa2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class EvilTree : MonoBehaviour
@@ -17,12 +19,11 @@ public class EvilTree : MonoBehaviour
     public Vector3 instantionOffset = new Vector3(0, 2.5f, 0);
     public GameObject player;
     public float treeHealth = 250f;
-    public Vector3 playerPos;
     private bool abilityPlaying = false;
-    public bool moveBool = false;
-    public bool hitWall = false;
     public Collider2D wallCollider;
     public Animator anim;
+
+    public NavMeshAgent navAgent;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class EvilTree : MonoBehaviour
         }
         player = GameObject.Find("Player");
         PM = GameObject.Find("ProceduralManager").GetComponent<ProceduralManager>();
+        navAgent = gameObject.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -40,8 +42,18 @@ public class EvilTree : MonoBehaviour
     {
         if (splitCooldown == false && treeHealth <= 150)
         {
+            anim.enabled = false;
             StartCoroutine(Cooldown());
             splitCooldown = true;
+        }
+
+        if(abilityPlaying == false)
+        {
+            NavMove();
+        }
+        else
+        {
+            anim.enabled = false;
         }
     }
 
@@ -193,17 +205,19 @@ public class EvilTree : MonoBehaviour
 
         anim.enabled = true;
         EH.treeSpawnCount -= 1;
-        Destroy(gameObject);
-        Destroy(instantiatedHoles[0]);
-        Destroy(instantiatedHoles[1]);
-        Destroy(instantiatedHoles[2]);
-        Destroy(instantiatedHoles[3]);
 
         splitCooldown = true;
 
         instantiatedTrees.Clear();
         instantiatedHoles.Clear();
         abilityPlaying = false;
+
+
+        Destroy(instantiatedHoles[0]);
+        Destroy(instantiatedHoles[1]);
+        Destroy(instantiatedHoles[2]);
+        Destroy(instantiatedHoles[3]);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -228,10 +242,10 @@ public class EvilTree : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void NavMove()
     {
-        hitWall = true;
-        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        anim.Play("TreeWalk");
+        navAgent.SetDestination(player.transform.position);
     }
 }
 
