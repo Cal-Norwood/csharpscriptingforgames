@@ -32,6 +32,7 @@ public class ProceduralManager : MonoBehaviour
     public Vector3 wallOffset = new Vector3(0, 0, -1);
     public List<GameObject> dungeonWalls;
     public RoomHandler RH;
+    public GameObject lastDungeonFloorRoom;
 
     public GameObject[] enemyDiff1;
 
@@ -197,7 +198,11 @@ public class ProceduralManager : MonoBehaviour
                     if (roomMatrix[a][b] == i)
                     {
                         yield return new WaitForSeconds(0.5f);
-                        activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
+                        if (roomMatrix[a][b] != roomCount - 1)
+                        {
+                            activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
+                        }
+
                         if (a > previousRoom.x)
                         {
                             int x = (int)previousRoom.x;
@@ -238,6 +243,7 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }   
                         }
                         if (a < previousRoom.x)
@@ -281,6 +287,7 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }
                         }
                         if (b > previousRoom.y)
@@ -324,6 +331,7 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }
                         }
                         if (b < previousRoom.y)
@@ -367,6 +375,7 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                                 Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }
                         }
                         previousRoom.x = a;
@@ -414,19 +423,20 @@ public class ProceduralManager : MonoBehaviour
     {
         if(roomSpawn == true)
         {
+            EH.enemyCount += 1;
             roomSpawn = false;
             yield return new WaitForSeconds(0.5f);
             dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
             dungeonWalls.Add(Instantiate(walls[1], currentRoom.transform.position + walls[1].transform.position + wallOffset, Quaternion.identity));
             dungeonWalls.Add(Instantiate(walls[2], currentRoom.transform.position + walls[2].transform.position + wallOffset, Quaternion.identity));
             dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
-            EH.enemyCount += 1;
             yield return new WaitForSeconds(1);
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[1].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
         }
 
         if (EH.enemyCount == 0)
         {
+            yield return new WaitForSeconds(0.5f);
             Destroy(dungeonWalls[3]);
             Destroy(dungeonWalls[2]);
             Destroy(dungeonWalls[1]);
@@ -457,15 +467,78 @@ public class ProceduralManager : MonoBehaviour
 
         if (EH.enemyCount == 0)
         {
+            yield return new WaitForSeconds(0.5f);
             Destroy(dungeonWalls[3]);
             Destroy(dungeonWalls[2]);
             Destroy(dungeonWalls[1]);
             Destroy(dungeonWalls[0]);
             dungeonWalls.Clear();
+            currentRoom = activeRooms[3];
             activeDoors[2].SetActive(false);
             roomReady.Add(false);
             roomSpawn = true;
             RH.roomActivated[1] = false;
+        }
+    }
+
+    public IEnumerator RoomFour()
+    {
+        if (roomSpawn == true)
+        {
+            EH.enemyCount += 1;
+            roomSpawn = false;
+            yield return new WaitForSeconds(0.5f);
+            dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[1], currentRoom.transform.position + walls[1].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[2], currentRoom.transform.position + walls[2].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
+            yield return new WaitForSeconds(1);
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[3].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
+        }
+
+        if (EH.enemyCount == 0)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Destroy(dungeonWalls[3]);
+            Destroy(dungeonWalls[2]);
+            Destroy(dungeonWalls[1]);
+            Destroy(dungeonWalls[0]);
+            dungeonWalls.Clear();
+            currentRoom = activeRooms[4];
+            activeDoors[3].SetActive(false);
+            roomReady.Add(false);
+            roomSpawn = true;
+            RH.roomActivated[2] = false;
+        }
+    }
+
+    public IEnumerator RoomFive()
+    {
+        if (roomSpawn == true)
+        {
+            EH.enemyCount += 1;
+            roomSpawn = false;
+            yield return new WaitForSeconds(0.5f);
+            dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[1], currentRoom.transform.position + walls[1].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[2], currentRoom.transform.position + walls[2].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
+            yield return new WaitForSeconds(1);
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[4].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
+        }
+
+        if (EH.enemyCount == 0)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Destroy(dungeonWalls[3]);
+            Destroy(dungeonWalls[2]);
+            Destroy(dungeonWalls[1]);
+            Destroy(dungeonWalls[0]);
+            dungeonWalls.Clear();
+            activeDoors[4].SetActive(false);
+            roomReady.Add(false);
+            roomSpawn = true;
+            RH.roomActivated[3] = false;
         }
     }
 }

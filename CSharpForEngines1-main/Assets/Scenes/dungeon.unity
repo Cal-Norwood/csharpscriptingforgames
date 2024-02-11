@@ -3149,6 +3149,7 @@ MonoBehaviour:
   wallOffset: {x: 0, y: 0, z: -1}
   dungeonWalls: []
   RH: {fileID: 356056838}
+  lastDungeonFloorRoom: {fileID: 819119664902331544, guid: 510785aa7d5fec14db7915c38a0af62b, type: 3}
   enemyDiff1:
   - {fileID: 5099875090793544052, guid: f9b13dff4419758458fcf23377896004, type: 3}
   activeDoors: []
