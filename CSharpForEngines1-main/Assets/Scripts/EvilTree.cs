@@ -68,7 +68,7 @@ public class EvilTree : MonoBehaviour
 
         if (treeHealth <= 0)
         {
-            EH.treeSpawnCount -= 1;
+            EH.enemyCount -= 1;
             Destroy(gameObject);
         }
     }

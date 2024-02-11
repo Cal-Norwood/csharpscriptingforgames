@@ -27,6 +27,11 @@ public class ProceduralManager : MonoBehaviour
     public Transform[] dungeonSpawns;
     public EnemyHandler EH;
     public bool roomSpawn = true;
+    public List<GameObject> spawnRoomWalls;
+    public List<BoxCollider2D> roomDetection;
+    public Vector3 wallOffset = new Vector3(0, 0, -1);
+    public List<GameObject> dungeonWalls;
+    public RoomHandler RH;
 
     public GameObject[] enemyDiff1;
 
@@ -153,10 +158,10 @@ public class ProceduralManager : MonoBehaviour
                         player.transform.Translate(roomPos[a][b].x, roomPos[a][b].y, 0);
                         previousRoom.x = a;
                         previousRoom.y = b;
-                        Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
-                        Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
-                        Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
-                        Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+                        spawnRoomWalls.Add(Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation));
+                        spawnRoomWalls.Add(Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation));
+                        spawnRoomWalls.Add(Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation));
+                        spawnRoomWalls.Add(Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation));
                     }
 
                     mapNodeGrid[a][b].color = Color.white;
@@ -173,18 +178,6 @@ public class ProceduralManager : MonoBehaviour
             StartCoroutine(SpawnSequance());
         }
 
-        for(int i = 0; i < activeDoors.Count; i++)
-        {
-            if (activeDoors[i].activeInHierarchy == false)
-            {
-                currentRoom = activeRooms[i + 1];
-            }
-            if(activeDoors[i].activeInHierarchy == false && (i + 1 == activeDoors.Count - 1))
-            {
-                currentRoom = activeRooms[i];
-            }
-        }
-
         if(roomReady[0] == true)
         {
             StartCoroutine(RoomOne());
@@ -194,6 +187,7 @@ public class ProceduralManager : MonoBehaviour
     private IEnumerator SpawnSequance()
     {
         roomsSpawned = true;
+        int previousCorridorIndex = 0;
         for (int i = 1; i < roomCount + 1; i++)
         {
             for (int a = 0; a < 3; a++)
@@ -208,69 +202,171 @@ public class ProceduralManager : MonoBehaviour
                         {
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
+
+                            if(roomMatrix[a][b] >= 2)
+                            {
+                                if(previousCorridorIndex == 0)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 2)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 3)
+                                {
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+                            }
+
                             Instantiate(corridors[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
+                            previousCorridorIndex = 0;
                             activeDoors.Add(Instantiate(doors[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
-                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
-                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
-                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
                             if (roomMatrix[a][b] == 1)
                             {
-                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
-                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
-                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                                Destroy(spawnRoomWalls[1]);
                             }
+
+                            if(roomMatrix[a][b] == roomCount - 1)
+                            {
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                            }   
                         }
                         if (a < previousRoom.x)
                         {
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
+
+                            if (roomMatrix[a][b] >= 2)
+                            {
+                                if (previousCorridorIndex == 1)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 2)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 3)
+                                {
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+                            }
+
                             Instantiate(corridors[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[1].transform.position, corridors[1].transform.rotation);
+                            previousCorridorIndex = 1;
                             activeDoors.Add(Instantiate(doors[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
-                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
-                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[2].transform.rotation);
-                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position, walls[3].transform.rotation);
+
                             if (roomMatrix[a][b] == 1)
                             {
-                                Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[1].transform.rotation);
-                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
-                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                                Destroy(spawnRoomWalls[0]);
+                            }
+
+                            if (roomMatrix[a][b] == roomCount - 1)
+                            {
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                             }
                         }
                         if (b > previousRoom.y)
                         {
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
+
+                            if (roomMatrix[a][b] >= 2)
+                            {
+                                if (previousCorridorIndex == 0)
+                                {
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 2)
+                                {
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 1)
+                                {
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+                            }
+
                             Instantiate(corridors[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[2].transform.position, corridors[2].transform.rotation);
+                            previousCorridorIndex = 2;
                             activeDoors.Add(Instantiate(doors[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
-                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
-                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
-                            Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[3].transform.rotation);
+
                             if (roomMatrix[a][b] == 1)
                             {
-                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
-                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
-                                Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[1].transform.rotation);
+                                Destroy(spawnRoomWalls[3]);
+                            }
 
+                            if (roomMatrix[a][b] == roomCount - 1)
+                            {
+                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                             }
                         }
                         if (b < previousRoom.y)
                         {
                             int x = (int)previousRoom.x;
                             int y = (int)previousRoom.y;
+
+                            if (roomMatrix[a][b] >= 2)
+                            {
+                                if (previousCorridorIndex == 0)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 1)
+                                {
+                                    Instantiate(walls[3], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+
+                                if (previousCorridorIndex == 3)
+                                {
+                                    Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                    Instantiate(walls[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                }
+                            }
+
                             Instantiate(corridors[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[3].transform.position, corridors[3].transform.rotation);
+                            previousCorridorIndex = 3;
                             activeDoors.Add(Instantiate(doors[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[2], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
-                            Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[1].transform.position, walls[1].transform.rotation);
-                            Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[2].transform.position, walls[3].transform.rotation);
-                            Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[0].transform.position, walls[0].transform.rotation);
+
                             if (roomMatrix[a][b] == 1)
                             {
-                                Instantiate(walls[0], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), walls[0].transform.rotation);
-                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[2].transform.rotation);
-                                Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[x][y].y, 0), walls[3].transform.rotation);
+                                Destroy(spawnRoomWalls[2]);
+                            }
+
+                            if (roomMatrix[a][b] == roomCount - 1)
+                            {
+                                Instantiate(walls[0], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[2], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
+                                Instantiate(walls[1], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
                             }
                         }
                         previousRoom.x = a;
@@ -286,6 +382,11 @@ public class ProceduralManager : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         roomReady.Add(true);
+
+        foreach(GameObject g in activeRooms)
+        {
+            roomDetection.Add(g.GetComponent<BoxCollider2D>());
+        }
     }
 
     private IEnumerator RoomOne()
@@ -293,20 +394,78 @@ public class ProceduralManager : MonoBehaviour
         if(roomSpawn == true)
         {
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
-            EH.treeSpawnCount += 1;
+            EH.enemyCount += 1;
             roomSpawn = false;
         }
 
-        if (EH.treeSpawnCount <= 0)
+        if (EH.enemyCount == 0)
         {
+            EH.ResetTreeAbility();
+            currentRoom = activeRooms[1];
             roomReady[0] = false;
             yield return new WaitForSeconds(1);
             activeDoors[0].SetActive(false);
-            roomReady.Add(true);
+            roomReady.Add(false);
             roomSpawn = true;
         }
     }
+
+    public IEnumerator RoomTwo()
+    {
+        if(roomSpawn == true)
+        {
+            roomSpawn = false;
+            yield return new WaitForSeconds(0.5f);
+            dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[1], currentRoom.transform.position + walls[1].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[2], currentRoom.transform.position + walls[2].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
+            EH.enemyCount += 1;
+            yield return new WaitForSeconds(1);
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[1].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
+        }
+
+        if (EH.enemyCount == 0)
+        {
+            Destroy(dungeonWalls[3]);
+            Destroy(dungeonWalls[2]);
+            Destroy(dungeonWalls[1]);
+            Destroy(dungeonWalls[0]);
+            dungeonWalls.Clear();
+            activeDoors[1].SetActive(false);
+            roomReady.Add(false);
+            currentRoom = activeRooms[2];
+            RH.roomActivated[0] = false;
+            roomSpawn = true;
+        }
+    }
+
+    public IEnumerator RoomThree()
+    {
+        if (roomSpawn == true)
+        {
+            EH.enemyCount += 1;
+            roomSpawn = false;
+            yield return new WaitForSeconds(0.5f);
+            dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[1], currentRoom.transform.position + walls[1].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[2], currentRoom.transform.position + walls[2].transform.position + wallOffset, Quaternion.identity));
+            dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
+            yield return new WaitForSeconds(1);
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[2].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
+        }
+
+        if (EH.enemyCount == 0)
+        {
+            Destroy(dungeonWalls[3]);
+            Destroy(dungeonWalls[2]);
+            Destroy(dungeonWalls[1]);
+            Destroy(dungeonWalls[0]);
+            dungeonWalls.Clear();
+            activeDoors[2].SetActive(false);
+            roomReady.Add(false);
+            roomSpawn = true;
+            RH.roomActivated[1] = false;
+        }
+    }
 }
-
-
-//TODO get walls working for first room

@@ -231,6 +231,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7429835532444912938, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
   m_PrefabInstance: {fileID: 1134504631}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &356056837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356056839}
+  - component: {fileID: 356056838}
+  m_Layer: 0
+  m_Name: RoomHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &356056838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356056837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e77b71612572044a5481ee53fc76e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PM: {fileID: 1970238826}
+  roomActivated: 
+--- !u!4 &356056839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356056837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1560464, y: -0.53710866, z: -26.781853}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &411199509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,7 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeActive: 0
   isInstantiated: 0
-  treeSpawnCount: 0
+  enemyCount: 0
   ET: {fileID: 0}
   PM: {fileID: 1970238826}
   spawnedEnemies: []
@@ -3085,7 +3131,7 @@ MonoBehaviour:
   - {fileID: 5734126368541002951, guid: 8aba5371142a8044c8a43fe23cb4031e, type: 3}
   - {fileID: 5429462925628133044, guid: 10f5580abef43e2429273f9136d10e32, type: 3}
   - {fileID: 6710652834615136822, guid: 1619d94ba8727ac45a425e7a9aad0732, type: 3}
-  - {fileID: 8892052800602152502, guid: 8a81e5e7727264946b5253f69c952e81, type: 3}
+  - {fileID: 6710652834615136822, guid: e8f99906bbba3cb4da2926fdf24657cc, type: 3}
   dungeonSpawns:
   - {fileID: 885401442}
   - {fileID: 442810373}
@@ -3098,6 +3144,11 @@ MonoBehaviour:
   - {fileID: 1089148146}
   EH: {fileID: 1478631352}
   roomSpawn: 1
+  spawnRoomWalls: []
+  roomDetection: []
+  wallOffset: {x: 0, y: 0, z: -1}
+  dungeonWalls: []
+  RH: {fileID: 356056838}
   enemyDiff1:
   - {fileID: 5099875090793544052, guid: f9b13dff4419758458fcf23377896004, type: 3}
   activeDoors: []

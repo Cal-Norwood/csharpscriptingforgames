@@ -21,7 +21,7 @@ public class BulletHandler : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(collision.tag != "Player")
+        if(collision.tag != "Player" || collision)
         {
             Destroy(gameObject);
         }
