@@ -22,6 +22,7 @@ public class EvilTree : MonoBehaviour
     public bool abilityPlaying = false;
     public Collider2D wallCollider;
     public Animator anim;
+    public GameObject Coin;
 
     public NavMeshAgent navAgent;
     // Start is called before the first frame update
@@ -69,6 +70,13 @@ public class EvilTree : MonoBehaviour
         if (treeHealth <= 0)
         {
             EH.enemyCount -= 1;
+            int randomNum = Random.Range(0, 4);
+            for(int i = 0; i < randomNum; i++)
+            {
+                GameObject spawnedCoin;
+                spawnedCoin = Instantiate(Coin, gameObject.transform.position + Coin.transform.position, quaternion.identity);
+                spawnedCoin.GetComponent<Rigidbody2D>().AddRelativeForce(Random.onUnitSphere * 1500);
+            }
             Destroy(gameObject);
         }
     }

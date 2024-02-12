@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5099875090793544052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 0, y: 3.5, z: -5}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -114,10 +114,11 @@ MonoBehaviour:
   instantionOffset: {x: 0, y: -2.5, z: 0}
   player: {fileID: 0}
   treeHealth: 250
+  abilityPlaying: 0
   wallCollider: {fileID: 8278813337296366218}
   anim: {fileID: 2635787344589929662}
-  handlerInstantiated: 0
-  treeHandler: {fileID: 5735166398415946999, guid: d35091a8da48e2e4885db1b618691f22, type: 3}
+  Coin: {fileID: 5375678997286053068, guid: 09cc3977b8fdc9c4caf3afbc2681d49b, type: 3}
+  coinRB: {fileID: -2799029809515003856, guid: 09cc3977b8fdc9c4caf3afbc2681d49b, type: 3}
   navAgent: {fileID: 0}
 --- !u!61 &8278813337296366218
 BoxCollider2D:

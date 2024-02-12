@@ -33,6 +33,7 @@ public class ProceduralManager : MonoBehaviour
     public List<GameObject> dungeonWalls;
     public RoomHandler RH;
     public GameObject lastDungeonFloorRoom;
+    public int currentFloor = 0;
 
     public GameObject[] enemyDiff1;
 
@@ -198,7 +199,7 @@ public class ProceduralManager : MonoBehaviour
                     if (roomMatrix[a][b] == i)
                     {
                         yield return new WaitForSeconds(0.5f);
-                        if (roomMatrix[a][b] != roomCount - 1)
+                        if (roomMatrix[a][b] != roomCount)
                         {
                             activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
                         }
