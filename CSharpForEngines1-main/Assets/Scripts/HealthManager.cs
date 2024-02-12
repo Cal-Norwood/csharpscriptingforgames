@@ -7,10 +7,11 @@ public class HealthManager : MonoBehaviour
 
     public Collider2D hitBox;
     public float Health;
+    public SaveVariables SV;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Health = SV.Health;
     }
 
     // Update is called once per frame

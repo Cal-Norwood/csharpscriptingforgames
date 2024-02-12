@@ -33,7 +33,8 @@ public class ProceduralManager : MonoBehaviour
     public List<GameObject> dungeonWalls;
     public RoomHandler RH;
     public GameObject lastDungeonFloorRoom;
-    public int currentFloor = 0;
+    public int currentFloor;
+    public SaveVariables SV;
 
     public GameObject[] enemyDiff1;
 
@@ -83,6 +84,7 @@ public class ProceduralManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentFloor = SV.currentFloor;
         mapNodeGrid[0].Add(mapNodes[0]);
         mapNodeGrid[0].Add(mapNodes[1]);
         mapNodeGrid[0].Add(mapNodes[2]);

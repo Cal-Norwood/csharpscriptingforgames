@@ -1826,6 +1826,10 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+      propertyPath: SV
+      value: 
+      objectReference: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
+    - target: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: hitBox
       value: 
       objectReference: {fileID: 1134504632}
@@ -1904,6 +1908,7 @@ MonoBehaviour:
   holderPosLeft: {fileID: 1567959294}
   holderPosBack: {fileID: 698756444}
   PM: {fileID: 1134504639}
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
   lastMove: 01000000
 --- !u!114 &1134504639 stripped
 MonoBehaviour:
@@ -1942,6 +1947,7 @@ MonoBehaviour:
   currentCoins: 0
   maxCoins: 999
   coinCounterDisplay: {fileID: 1407212296}
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
 --- !u!1 &1207696135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,6 +2659,7 @@ MonoBehaviour:
   - {fileID: 1987828009}
   - {fileID: 1381670175}
   currentLevel: 0
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
 --- !u!114 &1471395447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4071,6 +4078,7 @@ MonoBehaviour:
   RH: {fileID: 356056838}
   lastDungeonFloorRoom: {fileID: 819119664902331544, guid: 510785aa7d5fec14db7915c38a0af62b, type: 3}
   currentFloor: 0
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
   enemyDiff1:
   - {fileID: 5099875090793544052, guid: f9b13dff4419758458fcf23377896004, type: 3}
   activeDoors: []

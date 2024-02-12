@@ -10,11 +10,13 @@ public class PlayerWeaponHandler : MonoBehaviour
     public GameObject holderPosLeft;
     public GameObject holderPosBack;
     public PlayerMovement PM;
+    public SaveVariables SV;
 
     public bool[] lastMove = { true, false, false, false };
     // Start is called before the first frame update
     void Start()
     {
+        currentWeapon = SV.currentWeapon;
         currentWeapon.transform.position = holderPosFront.transform.position;
         currentWeapon.transform.parent = holderPosFront.transform;
     }

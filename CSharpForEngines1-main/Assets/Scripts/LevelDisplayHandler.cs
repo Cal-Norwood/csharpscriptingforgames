@@ -7,12 +7,13 @@ using TMPro;
 public class LevelDisplayHandler : MonoBehaviour
 {
     public TextMeshProUGUI[] levelDisplays;
-    public int currentLevel = 0;
+    public int currentLevel;
+    public SaveVariables SV;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentLevel = SV.currentFloor;
     }
 
     // Update is called once per frame
