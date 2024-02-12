@@ -7,6 +7,7 @@ public class NextFloorLoad : MonoBehaviour
 {
     public ProceduralManager PM;
     public Animator CM;
+    public bool reassignVariables;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +40,7 @@ public class NextFloorLoad : MonoBehaviour
     private IEnumerator WaitForFade()
     {
         yield return new WaitForSeconds(1);
+        reassignVariables = true;
         SceneManager.LoadScene("dungeon");
     }
 }

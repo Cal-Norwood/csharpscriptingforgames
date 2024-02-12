@@ -6,7 +6,7 @@ public class HealthManager : MonoBehaviour
 {
 
     public Collider2D hitBox;
-    public float Health = 100f;
+    public float Health;
     // Start is called before the first frame update
     void Start()
     {
