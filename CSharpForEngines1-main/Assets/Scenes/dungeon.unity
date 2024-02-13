@@ -3982,6 +3982,7 @@ MonoBehaviour:
   SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
   enemyDiff1:
   - {fileID: 5099875090793544052, guid: f9b13dff4419758458fcf23377896004, type: 3}
+  - {fileID: 6003429722388604922, guid: a63919df5058f514f98a9035b18a2105, type: 3}
   activeDoors: []
   activeRooms: []
   currentRoom: {fileID: 0}
