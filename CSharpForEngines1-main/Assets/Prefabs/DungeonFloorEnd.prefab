@@ -7443,6 +7443,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PM: {fileID: 0}
+  HM: {fileID: 0}
+  CM: {fileID: 0}
+  CH: {fileID: 0}
+  PWH: {fileID: 0}
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
 --- !u!1 &7727593942458760231
 GameObject:
   m_ObjectHideFlags: 0

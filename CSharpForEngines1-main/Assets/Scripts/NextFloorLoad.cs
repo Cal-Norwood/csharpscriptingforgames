@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 public class NextFloorLoad : MonoBehaviour
 {
     public ProceduralManager PM;
+    public HealthManager HM;
     public Animator CM;
-    public bool reassignVariables;
+    public CoinHandler CH;
+    public PlayerWeaponHandler PWH;
+    public SaveVariables SV;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,10 @@ public class NextFloorLoad : MonoBehaviour
         if(collision.tag == "Player")
         {
             CM.Play("FadeToBlack");
-            PM.currentFloor += 1;
+            SV.currentWeapon = PWH.currentWeapon;
+            SV.Health = HM.Health;
+            SV.currentFloor += 1;
+            SV.coinAmount = CH.currentCoins;
             StartCoroutine(WaitForFade());
         }
     }
@@ -35,12 +41,14 @@ public class NextFloorLoad : MonoBehaviour
         yield return new WaitForSeconds(10);
         CM = GameObject.Find("Virtual Camera").GetComponent<Animator>();
         PM = GameObject.Find("ProceduralManager").GetComponent<ProceduralManager>();
+        HM = GameObject.Find("Player").GetComponent<HealthManager>();
+        CH = GameObject.Find("Player").GetComponent<CoinHandler>();
+        PWH = GameObject.Find("Player").GetComponent<PlayerWeaponHandler>();
     }
 
     private IEnumerator WaitForFade()
     {
         yield return new WaitForSeconds(1);
-        reassignVariables = true;
         SceneManager.LoadScene("dungeon");
     }
 }

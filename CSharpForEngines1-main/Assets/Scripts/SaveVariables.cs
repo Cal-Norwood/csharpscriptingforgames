@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SaveVariables", menuName = "Persistence")]
 public class SaveVariables : ScriptableObject
 {
+    public GameObject startingWeapon;
     public float Health;
     public int coinAmount;
     public GameObject currentWeapon;
@@ -14,5 +15,6 @@ public class SaveVariables : ScriptableObject
         Health = 100;
         coinAmount = 0;
         currentFloor = 0;
+        currentWeapon = startingWeapon;
     }
 }

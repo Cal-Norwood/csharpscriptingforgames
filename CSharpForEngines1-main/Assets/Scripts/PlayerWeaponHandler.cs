@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerWeaponHandler : MonoBehaviour
 {
     public GameObject currentWeapon;
+    public GameObject weaponInPlay;
     public GameObject holderPosFront;
     public GameObject holderPosRight;
     public GameObject holderPosLeft;
@@ -17,14 +18,15 @@ public class PlayerWeaponHandler : MonoBehaviour
     void Start()
     {
         currentWeapon = SV.currentWeapon;
-        currentWeapon.transform.position = holderPosFront.transform.position;
-        currentWeapon.transform.parent = holderPosFront.transform;
+        weaponInPlay = Instantiate(currentWeapon);
+        weaponInPlay.transform.position = holderPosFront.transform.position;
+        weaponInPlay.transform.parent = holderPosFront.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentWeapon)
+        if (weaponInPlay)
         {
             if(PM.velocity.x > 0.8)
             {
@@ -66,86 +68,86 @@ public class PlayerWeaponHandler : MonoBehaviour
         float angle;
         if (lastMove[0] == true)
         {
-            currentWeapon.transform.parent = holderPosFront.transform;
-            currentWeapon.transform.position = holderPosFront.transform.position;
-            currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+            weaponInPlay.transform.parent = holderPosFront.transform;
+            weaponInPlay.transform.position = holderPosFront.transform.position;
+            weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             mousePos = Input.mousePosition;
-            gunPos = Camera.main.WorldToScreenPoint(currentWeapon.transform.position);
+            gunPos = Camera.main.WorldToScreenPoint(weaponInPlay.transform.position);
             mousePos.x = mousePos.x - gunPos.x;
             mousePos.y = mousePos.y - gunPos.y;
             angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             if((angle < -90 || angle < 180) && angle > 60 || angle < -60)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
             }
             else if(angle < 60 && angle > -90)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             }
-            currentWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            weaponInPlay.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         if (lastMove[1] == true)
         {
-            currentWeapon.transform.parent = holderPosRight.transform;
-            currentWeapon.transform.position = holderPosRight.transform.position;
-            currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+            weaponInPlay.transform.parent = holderPosRight.transform;
+            weaponInPlay.transform.position = holderPosRight.transform.position;
+            weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             mousePos = Input.mousePosition;
-            gunPos = Camera.main.WorldToScreenPoint(currentWeapon.transform.position);
+            gunPos = Camera.main.WorldToScreenPoint(weaponInPlay.transform.position);
             mousePos.x = mousePos.x - gunPos.x;
             mousePos.y = mousePos.y - gunPos.y;
             angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             if ((angle < -90 || angle < 180) && angle > 60 || angle < -60)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
             }
             else if (angle < 60 && angle > -90)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             }
-            currentWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            weaponInPlay.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         if (lastMove[2] == true)
         {
-            currentWeapon.transform.parent = holderPosLeft.transform;
-            currentWeapon.transform.position = holderPosLeft.transform.position;
-            currentWeapon.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            weaponInPlay.transform.parent = holderPosLeft.transform;
+            weaponInPlay.transform.position = holderPosLeft.transform.position;
+            weaponInPlay.transform.localScale = new Vector3(1.5f, 1.5f, 1);
             mousePos = Input.mousePosition;
-            gunPos = Camera.main.WorldToScreenPoint(currentWeapon.transform.position);
+            gunPos = Camera.main.WorldToScreenPoint(weaponInPlay.transform.position);
             mousePos.x = mousePos.x - gunPos.x;
             mousePos.y = mousePos.y - gunPos.y;
             angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             if ((angle < -90 || angle < 180) && angle > 60 || angle < -60)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
             }
             else if (angle < 60 && angle > -90)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             }
-            currentWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            weaponInPlay.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         if (lastMove[3] == true)
         {
-            currentWeapon.transform.parent = holderPosBack.transform;
-            currentWeapon.transform.position = holderPosBack.transform.position;
-            currentWeapon.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            weaponInPlay.transform.parent = holderPosBack.transform;
+            weaponInPlay.transform.position = holderPosBack.transform.position;
+            weaponInPlay.transform.localScale = new Vector3(1.5f, 1.5f, 1);
             mousePos = Input.mousePosition;
-            gunPos = Camera.main.WorldToScreenPoint(currentWeapon.transform.position);
+            gunPos = Camera.main.WorldToScreenPoint(weaponInPlay.transform.position);
             mousePos.x = mousePos.x - gunPos.x;
             mousePos.y = mousePos.y - gunPos.y;
             angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             if ((angle < -90 || angle < 180) && angle > 60 || angle < -60)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, -1.5f, 1);
             }
             else if (angle < 60 && angle > -90)
             {
-                currentWeapon.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
+                weaponInPlay.transform.localScale = new Vector3(-1.5f, 1.5f, 1);
             }
-            currentWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            weaponInPlay.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
     }
 }

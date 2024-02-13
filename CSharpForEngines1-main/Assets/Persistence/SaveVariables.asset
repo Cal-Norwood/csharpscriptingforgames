@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b987c2ad8cb2f468fd7f21371c3e51, type: 3}
   m_Name: SaveVariables
   m_EditorClassIdentifier: 
+  startingWeapon: {fileID: 259678197543069359, guid: 0e00787900e9b8248a0aed83fef4d931, type: 3}
   Health: 100
   coinAmount: 0
   currentWeapon: {fileID: 259678197543069359, guid: 0e00787900e9b8248a0aed83fef4d931, type: 3}
