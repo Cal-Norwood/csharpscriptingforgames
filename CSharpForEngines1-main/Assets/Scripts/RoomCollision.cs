@@ -22,6 +22,8 @@ public class RoomCollision : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            if(RH.PM.roomReady[0] == false)
+            Debug.Log("noooo");
             bc.enabled = false;
             RH.roomActivated.Add(true);
         }

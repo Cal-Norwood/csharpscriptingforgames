@@ -94,6 +94,7 @@ public class ProceduralManager : MonoBehaviour
         mapNodeGrid[2].Add(mapNodes[6]);
         mapNodeGrid[2].Add(mapNodes[7]);
         mapNodeGrid[2].Add(mapNodes[8]);
+        roomSpawn = true;
 
         roomCount = Random.Range(3, 7);
         for (int i = 0; i < roomCount; i++)
@@ -403,8 +404,10 @@ public class ProceduralManager : MonoBehaviour
 
     private IEnumerator RoomOne()
     {
+        Debug.Log("wokingee");
         if(roomSpawn == true)
         {
+            Debug.Log("wokingeeffff");
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
             EH.enemyCount += 1;
             roomSpawn = false;
