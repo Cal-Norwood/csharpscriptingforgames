@@ -23,11 +23,16 @@ public class EvilTree : MonoBehaviour
     public Collider2D wallCollider;
     public Animator anim;
     public GameObject Coin;
+    public Material mat;
+    public float dissolveAmount = 1;
+    public bool isDissolving;
+    public bool deathOnce = false;
 
     public NavMeshAgent navAgent;
     // Start is called before the first frame update
     void Start()
     {
+        mat.SetFloat("_DissolveAmount", dissolveAmount);
         EH = GameObject.Find("DungeonSpawns").GetComponent<EnemyHandler>();
         if (EH.treeActive == false)
         {
@@ -69,15 +74,20 @@ public class EvilTree : MonoBehaviour
 
         if (treeHealth <= 0)
         {
-            EH.enemyCount -= 1;
-            int randomNum = Random.Range(0, 4);
-            for(int i = 0; i < randomNum; i++)
+            if(deathOnce == false)
             {
-                GameObject spawnedCoin;
-                spawnedCoin = Instantiate(Coin, gameObject.transform.position + Coin.transform.position, quaternion.identity);
-                spawnedCoin.GetComponent<Rigidbody2D>().AddRelativeForce(Random.onUnitSphere * 1500);
+                deathOnce = true;
+                isDissolving = true;
+                EH.StartCoroutine(EH.Dissolve(gameObject));
+                EH.enemyCount -= 1;
+                int randomNum = Random.Range(0, 4);
+                for (int i = 0; i < randomNum; i++)
+                {
+                    GameObject spawnedCoin;
+                    spawnedCoin = Instantiate(Coin, gameObject.transform.position + Coin.transform.position, quaternion.identity);
+                    spawnedCoin.GetComponent<Rigidbody2D>().AddRelativeForce(Random.onUnitSphere * 1500);
+                }
             }
-            Destroy(gameObject);
         }
     }
 

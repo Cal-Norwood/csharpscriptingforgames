@@ -173,4 +173,21 @@ public class EnemyHandler : MonoBehaviour
         ET.treeHealth = 250;
         ET.splitCooldown = false;
     }
+
+    public IEnumerator Dissolve(GameObject tree)
+    {
+        while (true)
+        {
+            ET.dissolveAmount -= (Time.deltaTime * 0.5f);
+            ET.mat.SetFloat("_DissolveAmount", ET.dissolveAmount);
+            if (ET.dissolveAmount <= 0)
+            {
+                ET.isDissolving = false;
+                break;
+            }
+            yield return null;
+        }
+        ET.deathOnce = false;
+        Destroy(tree);
+    }
 }
