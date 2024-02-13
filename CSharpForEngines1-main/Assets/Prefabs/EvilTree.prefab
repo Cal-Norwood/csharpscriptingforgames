@@ -59,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: de7bb96e696014f418b4c56c502ce8ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,7 +118,6 @@ MonoBehaviour:
   wallCollider: {fileID: 8278813337296366218}
   anim: {fileID: 2635787344589929662}
   Coin: {fileID: 5375678997286053068, guid: 09cc3977b8fdc9c4caf3afbc2681d49b, type: 3}
-  coinRB: {fileID: -2799029809515003856, guid: 09cc3977b8fdc9c4caf3afbc2681d49b, type: 3}
   navAgent: {fileID: 0}
 --- !u!61 &8278813337296366218
 BoxCollider2D:
