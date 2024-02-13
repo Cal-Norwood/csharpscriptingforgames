@@ -76,6 +76,7 @@ public class EvilTree : MonoBehaviour
         {
             if(deathOnce == false)
             {
+                gameObject.GetComponent<SpriteRenderer>().material = mat;
                 deathOnce = true;
                 isDissolving = true;
                 EH.StartCoroutine(EH.Dissolve(gameObject));
@@ -93,6 +94,10 @@ public class EvilTree : MonoBehaviour
 
     void NavMove()
     {
+        if ((PM.currentFloor == 1))
+        {
+            navAgent.speed = 5;
+        }
         anim.Play("TreeWalk");
         navAgent.SetDestination(player.transform.position);
     }

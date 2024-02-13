@@ -59,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fb412b2ed088c384ab15990139ed552f, type: 2}
+  - {fileID: 2100000, guid: de7bb96e696014f418b4c56c502ce8ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,6 +121,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: fb412b2ed088c384ab15990139ed552f, type: 2}
   dissolveAmount: 1
   isDissolving: 0
+  deathOnce: 0
   navAgent: {fileID: 0}
 --- !u!61 &8278813337296366218
 BoxCollider2D:

@@ -178,7 +178,7 @@ public class EnemyHandler : MonoBehaviour
     {
         while (true)
         {
-            ET.dissolveAmount -= (Time.deltaTime * 0.5f);
+            ET.dissolveAmount -= (Time.deltaTime * 0.6f);
             ET.mat.SetFloat("_DissolveAmount", ET.dissolveAmount);
             if (ET.dissolveAmount <= 0)
             {
@@ -188,6 +188,8 @@ public class EnemyHandler : MonoBehaviour
             yield return null;
         }
         ET.deathOnce = false;
+        ET.mat.SetFloat("_DissolveAmount", 1);
+        ET.dissolveAmount = 1;
         Destroy(tree);
     }
 }
