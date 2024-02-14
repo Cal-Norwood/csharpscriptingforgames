@@ -409,7 +409,8 @@ public class ProceduralManager : MonoBehaviour
         {
             Debug.Log("wokingeeffff");
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
-            EH.enemyCount += 1;
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[1], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[1].transform.position, Quaternion.identity));
+            EH.enemyCount += 2;
             roomSpawn = false;
         }
 
