@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingWeapon: {fileID: 259678197543069359, guid: 0e00787900e9b8248a0aed83fef4d931, type: 3}
   Health: 100
-  coinAmount: 0
-  currentWeapon: {fileID: 259678197543069359, guid: 0e00787900e9b8248a0aed83fef4d931, type: 3}
+  coinAmount: 40
+  currentWeapon: {fileID: 5467713644023702698, guid: c000f1da4e2012c47b957491cf73cca4, type: 3}
   currentFloor: 0

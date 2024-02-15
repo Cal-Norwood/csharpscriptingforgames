@@ -7,6 +7,8 @@ public class SceneSwitcher : MonoBehaviour
 {
     public string Scene;
     public Animator CM;
+    public SaveVariables SV;
+    public PlayerWeaponHandler PWH;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class SceneSwitcher : MonoBehaviour
 
     IEnumerator WaitForFade()
     {
+        SV.currentWeapon = PWH.currentWeapon;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(Scene);
     }

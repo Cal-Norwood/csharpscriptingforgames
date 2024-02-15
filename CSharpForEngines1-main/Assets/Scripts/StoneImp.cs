@@ -13,6 +13,7 @@ public class StoneImp : MonoBehaviour
     public bool setDestination = false;
     public ProceduralManager PM;
     public EnemyHandler EH;
+    public bool killOnce = false;
 
     private void Awake()
     {
@@ -47,9 +48,11 @@ public class StoneImp : MonoBehaviour
     {
         ImpHealth -= damage;
 
-        if (ImpHealth <= 0)
+        if (ImpHealth <= 0 && killOnce == false)
         {
+            Debug.Log("enemydown");
             EH.enemyCount -= 1;
+            killOnce = true;
             Destroy(gameObject);
         }
     }

@@ -46,6 +46,7 @@ public class EvilTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(deathOnce);
         if(abilityPlaying == false)
         {
             NavMove();
@@ -76,6 +77,7 @@ public class EvilTree : MonoBehaviour
         {
             if(deathOnce == false)
             {
+                EH.ResetTreeAbility();
                 gameObject.GetComponent<SpriteRenderer>().material = mat;
                 deathOnce = true;
                 isDissolving = true;

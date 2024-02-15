@@ -1709,6 +1709,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Scene: dungeon
   CM: {fileID: 1455564017}
+  SV: {fileID: 11400000, guid: 0816e46a74d4f3242ba5013f538cceb3, type: 2}
+  PWH: {fileID: 7324947921508215083}
 --- !u!61 &771633107
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14062,6 +14064,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 97798730779573479, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2264368934126636991, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -14079,3 +14085,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+--- !u!114 &7324947921508215083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8981806246461348920, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+  m_PrefabInstance: {fileID: 7324947921508215082}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644892548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85e08d0d619cb4f9ce8cd5bbf538bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

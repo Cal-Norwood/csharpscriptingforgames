@@ -430,7 +430,7 @@ public class ProceduralManager : MonoBehaviour
     {
         if(roomSpawn == true)
         {
-            EH.enemyCount += 1;
+            EH.enemyCount += 3;
             roomSpawn = false;
             yield return new WaitForSeconds(0.5f);
             dungeonWalls.Add(Instantiate(walls[0], currentRoom.transform.position + walls[0].transform.position + wallOffset, Quaternion.identity));
@@ -439,6 +439,8 @@ public class ProceduralManager : MonoBehaviour
             dungeonWalls.Add(Instantiate(walls[3], currentRoom.transform.position + walls[3].transform.position + wallOffset, Quaternion.identity));
             yield return new WaitForSeconds(1);
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[1].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[1], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[1].transform.position + enemyDiff1[1].transform.position, Quaternion.identity));
+            EH.spawnedEnemies.Add(Instantiate(enemyDiff1[1], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[1].transform.position + enemyDiff1[1].transform.position, Quaternion.identity));
         }
 
         if (EH.enemyCount == 0)

@@ -18,9 +18,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     void Start()
     {
         currentWeapon = SV.currentWeapon;
-        weaponInPlay = Instantiate(currentWeapon);
-        weaponInPlay.transform.position = holderPosFront.transform.position;
-        weaponInPlay.transform.parent = holderPosFront.transform;
+        WeaponSetup();
     }
 
     // Update is called once per frame
@@ -149,5 +147,12 @@ public class PlayerWeaponHandler : MonoBehaviour
             }
             weaponInPlay.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
+    }
+
+    public void WeaponSetup()
+    {
+        weaponInPlay = Instantiate(currentWeapon);
+        weaponInPlay.transform.position = holderPosFront.transform.position;
+        weaponInPlay.transform.parent = holderPosFront.transform;
     }
 }

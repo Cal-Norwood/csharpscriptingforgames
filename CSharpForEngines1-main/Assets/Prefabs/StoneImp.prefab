@@ -108,6 +108,7 @@ MonoBehaviour:
   randomNavSphere: {x: 0, y: 0, z: 0}
   setDestination: 0
   PM: {fileID: 0}
+  EH: {fileID: 0}
 --- !u!95 &-2131429079042008374
 Animator:
   serializedVersion: 5
@@ -139,7 +140,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2.640625
-  m_Speed: 6
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 49
   m_AngularSpeed: 120

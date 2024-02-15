@@ -6,6 +6,12 @@ public class BulletHandler : MonoBehaviour
 {
     public int damage;
     public ParticleSystem particles;
+
+    private void Start()
+    {
+        StartCoroutine(Delay());    
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag != "Player")
@@ -29,5 +35,11 @@ public class BulletHandler : MonoBehaviour
             particles.Play();
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 }

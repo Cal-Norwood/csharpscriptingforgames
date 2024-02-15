@@ -29,7 +29,7 @@ public class EnemyHandler : MonoBehaviour
 
         if (ET.splitCooldown == false && ET.treeHealth <= 150)
         {
-            Debug.Log("woking");
+            Debug.Log("wokingability");
             ET.anim.enabled = false;
             ET.splitCooldown = true;
             StartCoroutine(Cooldown());
@@ -165,13 +165,13 @@ public class EnemyHandler : MonoBehaviour
 
         ET.instantiatedHoles.Clear();
         Destroy(spawnedEnemies[0]);
-        spawnedEnemies.Clear();
     }
 
     public void ResetTreeAbility()
     {
         ET.treeHealth = 250;
         ET.splitCooldown = false;
+        spawnedEnemies.Clear();
     }
 
     public IEnumerator Dissolve(GameObject tree)
