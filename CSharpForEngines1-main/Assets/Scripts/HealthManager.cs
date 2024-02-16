@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class HealthManager : MonoBehaviour
     public SaveVariables SV;
     public bool isInvunrable = false;
     public SpriteRenderer colourchanger;
+    public CoinHandler CH;
+    public Animator CM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +25,9 @@ public class HealthManager : MonoBehaviour
     {
         if(Health <= 0)
         {
-            Debug.Log("Dead");
+            CM.Play("FadeToBlack");
+            StartCoroutine(WaitForFade());
+            SV.coinAmount = CH.currentCoins;
         }
     }
 
@@ -47,5 +53,11 @@ public class HealthManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         colourchanger.color = new Color(1f, 1f, 1f, 1f);
         isInvunrable = false;
+    }
+
+    private IEnumerator WaitForFade()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("StatScreen");
     }
 }

@@ -1684,6 +1684,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1407212296}
     - target: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+      propertyPath: CH
+      value: 
+      objectReference: {fileID: 1134504632}
+    - target: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+      propertyPath: CM
+      value: 
+      objectReference: {fileID: 514850646}
+    - target: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
       propertyPath: colourchanger
       value: 
       objectReference: {fileID: 1134504641}
@@ -1696,6 +1704,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+--- !u!114 &1134504632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5063929285132088593, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
+  m_PrefabInstance: {fileID: 1134504631}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289635341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004f23ae5a25f724cb33f763b0f78690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1134504640 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6033550719077410824, guid: e78ae2226480d7b4ea49937d556a9ccc, type: 3}
