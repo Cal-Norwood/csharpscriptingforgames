@@ -8,18 +8,6 @@ public class LightSwitch : MonoBehaviour
     public Light2D L;
     private bool hasActivated = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (hasActivated == false)
@@ -31,6 +19,7 @@ public class LightSwitch : MonoBehaviour
 
     IEnumerator SwitchTime()
     {
+        // set the light intensity from low to high over a period of time to give a set of lights turning on effect
         yield return new WaitForSeconds(0.5f);
 
         for(float i = 0; i < 1.7; i += 0.1f)

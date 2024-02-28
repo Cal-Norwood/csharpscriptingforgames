@@ -21,6 +21,7 @@ public class ShotgunLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if player presses the fire button start the fire function
         if (Input.GetKey(KeyCode.Mouse0) && readyToFire == true)
         {
             readyToFire = false;
@@ -31,12 +32,14 @@ public class ShotgunLogic : MonoBehaviour
 
     private IEnumerator FireRateHandler()
     {
+        // after the time has run out allow the player to shoot again
         yield return new WaitForSeconds(fireRate * 0.1f);
         readyToFire = true;
     }
 
     void Fire(GameObject[] spawnPos)
     {
+        // if the gun is facing left spawn the bullets and shoot them in the corresponding barrel position
         if (gameObject.transform.localScale.y > 0)
         {
             spawnedBullets.Add(Instantiate(bullet, new Vector3(spawnPos[0].transform.position.x, spawnPos[0].transform.position.y, spawnPos[0].transform.position.z), Quaternion.Euler(0, 0, 180)));
@@ -54,6 +57,7 @@ public class ShotgunLogic : MonoBehaviour
             spawnedBullets[spawnedBullets.Count - 1].GetComponent<Rigidbody2D>().velocity = spawnedBullets[spawnedBullets.Count - 1].transform.right * bulletSpeed;
             spawnedBullets[spawnedBullets.Count - 1].GetComponent<BulletHandler>().damage = shotgunDamage;
         }
+        // same as above but for if the gun is facing right
         else
         {
             spawnedBullets.Add(Instantiate(bullet, new Vector3(spawnPos[0].transform.position.x, spawnPos[0].transform.position.y, spawnPos[0].transform.position.z), Quaternion.identity));

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//varaible saver to sav variables with a scriptable object when changing scenes 
 [CreateAssetMenu(fileName = "SaveVariables", menuName = "Persistence")]
 public class SaveVariables : ScriptableObject
 {

@@ -20,10 +20,10 @@ public class RoomCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if the player has collided with a new room set that room active ready for enemy spawns in the procedural manager
         if(collision.tag == "Player")
         {
             if(RH.PM.roomReady[0] == false)
-            Debug.Log("noooo");
             bc.enabled = false;
             RH.roomActivated.Add(true);
         }

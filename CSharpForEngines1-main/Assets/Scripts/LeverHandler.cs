@@ -10,15 +10,11 @@ public class LeverHandler : MonoBehaviour
 
     public bool hasActivated = false;
     public bool leverPrimed = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
+        // if the player presses e while the lever is primed start the cutscene and change the look of the lever
         if (Input.GetKeyDown(KeyCode.E) && hasActivated == false && leverPrimed == true)
         {
             timelineManager.BroadcastMessage("StartTimeline");

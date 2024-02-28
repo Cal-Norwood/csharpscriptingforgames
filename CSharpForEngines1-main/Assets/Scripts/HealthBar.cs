@@ -21,6 +21,7 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Depending on the player's health display the correct health bar stage
         if (HM.Health > 75)
         {
             healthBar.sprite = healthStages[0];
@@ -45,6 +46,7 @@ public class HealthBar : MonoBehaviour
 
     private IEnumerator LowHealthFlash()
     {
+        // when the player is low health make the health bar flash red
         delayBool = true;
         healthBar.sprite = healthStages[3];
         while (HM.Health > 0)

@@ -22,6 +22,7 @@ public class DeathTavernLoad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Allows the players to load into the next scene after death
         coinAmount.text = numberOfCoins.ToString();
         if (Input.GetKeyDown(KeyCode.Return) && coinsDepleted == true)
         {
@@ -32,6 +33,7 @@ public class DeathTavernLoad : MonoBehaviour
 
     private IEnumerator Delay()
     {
+        // Depletes the players coins over a set of time for effect
         yield return new WaitForSeconds(0.4f);
         while(numberOfCoins > 0)
         {

@@ -12,6 +12,7 @@ public class RoomHandler : MonoBehaviour
         
     }
 
+    // middle man between RoomCollision and ProceduralManager to start the correct coroutines based on what room the player is in
     private void Update()
     {
         if(roomActivated[0] == true && PM.roomCount != 2)

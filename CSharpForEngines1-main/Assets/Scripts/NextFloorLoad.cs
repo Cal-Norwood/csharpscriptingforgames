@@ -25,6 +25,7 @@ public class NextFloorLoad : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // when the player walks into the next floor set all relvent variables into the variable saver ready for load and fade to black
         if(collision.tag == "Player")
         {
             CM.Play("FadeToBlack");
@@ -48,6 +49,7 @@ public class NextFloorLoad : MonoBehaviour
 
     private IEnumerator WaitForFade()
     {
+        // load the dungeon scene
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("dungeon");
     }

@@ -32,6 +32,7 @@ public class SceneSwitcher : MonoBehaviour
 
     IEnumerator WaitForFade()
     {
+        //save current weapon and load a new scene
         SV.currentWeapon = PWH.currentWeapon;
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(Scene);

@@ -25,6 +25,7 @@ public class StartScreen : MonoBehaviour
             enterPressed = true;
         }
 
+        // if player presses enter display the sound settings 
         if(enterPressed == true)
         {
             continueText.enabled = false;

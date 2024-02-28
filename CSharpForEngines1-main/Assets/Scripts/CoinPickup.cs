@@ -17,6 +17,7 @@ public class CoinPickup : MonoBehaviour
         
     }
 
+    // Add coins to the players stats if the player has collided with the pick up
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")

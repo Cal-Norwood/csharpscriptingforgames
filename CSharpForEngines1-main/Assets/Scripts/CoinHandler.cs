@@ -13,12 +13,14 @@ public class CoinHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // getting coin amount from the variable saver
         currentCoins = SV.coinAmount;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // updating the coin ui
         coinCounterDisplay.text = currentCoins.ToString();
     }
 }

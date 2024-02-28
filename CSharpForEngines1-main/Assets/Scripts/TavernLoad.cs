@@ -32,12 +32,14 @@ public class TavernLoad : MonoBehaviour
 
     private IEnumerator WaitForFade()
     {
+        // load the tavern scene
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("sample");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // if the player comes into context with the entrance fade the camera to black then assign the correct variables to the variable saver then start the function that opens the next scene
         if (collision.tag == "Player")
         {
             CM.Play("FadeToBlack");

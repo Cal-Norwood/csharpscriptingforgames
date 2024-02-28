@@ -27,9 +27,9 @@ public class EnemyHandler : MonoBehaviour
             ET = spawnedEnemies[0].GetComponent<EvilTree>();
         }
 
+        // If the evil tree enemy's health is below half play its signiture ability
         if (ET.splitCooldown == false && ET.treeHealth <= 150)
         {
-            Debug.Log("wokingability");
             ET.anim.enabled = false;
             ET.splitCooldown = true;
             StartCoroutine(Cooldown());
@@ -38,6 +38,7 @@ public class EnemyHandler : MonoBehaviour
 
     private IEnumerator Cooldown()
     {
+        // Instantiating the hole for the enemy to jump into for its ability then assigning the corresponding variables ready to be manipulated
         ET.abilityPlaying = true;
         yield return new WaitForSeconds(0.5f);
         ET.currentHole = Instantiate(ET.hole, spawnedEnemies[0].transform.position + ET.hole.transform.position, Quaternion.identity);
@@ -46,6 +47,7 @@ public class EnemyHandler : MonoBehaviour
         Transform treePos = spawnedEnemies[0].transform;
         Transform holePos = ET.currentHole.transform;
 
+        // makes the enemy jump up in 0.5 seconds
         while (true)
         {
             t += Time.deltaTime;
@@ -60,6 +62,7 @@ public class EnemyHandler : MonoBehaviour
         treePos = spawnedEnemies[0].transform;
         holePos = ET.currentHole.transform;
 
+        // makes the player go into the hole then reduce its scale so it appears hidden
         while (true)
         {
             t += Time.deltaTime;
@@ -83,6 +86,7 @@ public class EnemyHandler : MonoBehaviour
                     int randomTry;
 
                     yield return new WaitForSeconds(0.2f);
+                    // instantiate more holes and then trees with a low scale so they can be manipulated later to appear as if they are jumping out of the tree
                     while (true)
                     {
                         randomTry = Random.Range(0, 9);
@@ -147,6 +151,7 @@ public class EnemyHandler : MonoBehaviour
 
     private IEnumerator DigUpHandler(int dir, GameObject itree, GameObject ihole)
     {
+        // make the spawned in trees have a 3rd of the original trees health to balence the difficulty
         if (dir == 0)
         {
             itree.GetComponent<EvilTree>().treeHealth = ET.treeHealth / 3;
@@ -176,6 +181,7 @@ public class EnemyHandler : MonoBehaviour
 
     public IEnumerator Dissolve(GameObject tree)
     {
+        // when an evil tree is dead create a dissolve effect by modifying the slider in the shader I created to appear like it is dissolving instead of just disappearing 
         while (true)
         {
             ET.dissolveAmount -= (Time.deltaTime * 0.6f);

@@ -21,11 +21,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         velocity = Vector3.zero;
-        //line below to mark out
         velocity.x = Input.GetAxisRaw("Horizontal");
-        //line below to comment out 
         velocity.y = Input.GetAxisRaw("Vertical");
 
+        // if the player is not moving set relvent bool 
         if (velocity != Vector3.zero)
         {
             animator.SetBool("moving", true);
@@ -38,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveCharacter()
     {
+        // if the player is holding the sprint speed increase speed
         if (Input.GetKey(KeyCode.LeftShift))
         {
             rb.MovePosition(
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // set relvent floats in the animator for animation 
         if (velocity != Vector3.zero)
         {
             MoveCharacter();

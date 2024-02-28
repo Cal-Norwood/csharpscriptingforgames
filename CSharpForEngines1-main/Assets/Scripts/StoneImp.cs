@@ -38,6 +38,7 @@ public class StoneImp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // deal damage to the player if it collides with it
         if (collision.tag == "Player")
         {
             player.BroadcastMessage("DealDamage", 10);
@@ -46,8 +47,10 @@ public class StoneImp : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // if the imp takes damge remove some of its health
         ImpHealth -= damage;
 
+        // if the imp has no health left kill it
         if (ImpHealth <= 0 && killOnce == false)
         {
             Debug.Log("enemydown");
@@ -59,6 +62,7 @@ public class StoneImp : MonoBehaviour
 
     void NavMove()
     {
+        // start the moving animation the start the movement coroutine
         anim.Play("ImpFly");
         if(setDestination == false)
         {
@@ -67,6 +71,7 @@ public class StoneImp : MonoBehaviour
         }
     }
 
+    // pick a random point in the current room then after a set duration set that to their destination and move the player
     private IEnumerator RandomMovement()
     {
         randomNavSphere = PM.currentRoom.transform.position + Random.insideUnitSphere * 10;

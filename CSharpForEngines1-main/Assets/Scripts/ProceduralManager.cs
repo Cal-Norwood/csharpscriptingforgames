@@ -84,6 +84,7 @@ public class ProceduralManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // getting current floor from save variables and adding the map nodes to the grid
         currentFloor = SV.currentFloor;
         mapNodeGrid[0].Add(mapNodes[0]);
         mapNodeGrid[0].Add(mapNodes[1]);
@@ -96,7 +97,10 @@ public class ProceduralManager : MonoBehaviour
         mapNodeGrid[2].Add(mapNodes[8]);
         roomSpawn = true;
 
+        // making max rooms a random int from 3 to 6
         roomCount = Random.Range(3, 7);
+
+        // for loop to choose an amount of rooms under the room limit making sure they are all adjacent to each other and if that is the case set their refrence in the room matrix to an order from 0 to room count so they can be manipulated later
         for (int i = 0; i < roomCount; i++)
         {
             horizontalChoice = Random.Range(0, 3);
@@ -157,6 +161,7 @@ public class ProceduralManager : MonoBehaviour
             {
                 if (roomMatrix[a][b] >= 0)
                 {
+                    // if the room is the first room instantiate the first room in the correct position and add 4 walls to the room and set the Map Ui Corresponding node to white
                     if (roomMatrix[a][b] == 0)
                     {
                         activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
@@ -193,6 +198,8 @@ public class ProceduralManager : MonoBehaviour
     {
         roomsSpawned = true;
         int previousCorridorIndex = 0;
+
+        // for loops to check all possible rooms and instantiate the rooms in the correct order based on their index in the room matrix
         for (int i = 1; i < roomCount + 1; i++)
         {
             for (int a = 0; a < 3; a++)
@@ -207,6 +214,7 @@ public class ProceduralManager : MonoBehaviour
                             activeRooms.Add(Instantiate(mainRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0), Quaternion.identity));
                         }
 
+                        // if the room that has just been instantiated is adjacently below the room spawned previously instantiate the correct corridor between them and the correct walls and a door on the entry of the corridor
                         if (a > previousRoom.x)
                         {
                             int x = (int)previousRoom.x;
@@ -237,11 +245,13 @@ public class ProceduralManager : MonoBehaviour
                             previousCorridorIndex = 0;
                             activeDoors.Add(Instantiate(doors[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity));
                             Instantiate(doorsOpen[1], new Vector3(roomPos[x][y].x, roomPos[x][y].y, 0), Quaternion.identity);
+                            // if the spawned room is the 2nd room depending on where the 2nd room is destroy the excess wall not needed in room 1 so they player has no chance of getting stuck
                             if (roomMatrix[a][b] == 1)
                             {
                                 Destroy(spawnRoomWalls[1]);
                             }
 
+                            // if the current room is the last room instantiate a different room and put walls on the correct sides
                             if(roomMatrix[a][b] == roomCount - 1)
                             {
                                 Instantiate(walls[3], new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + walls[3].transform.position + wallOffset, Quaternion.identity);
@@ -250,6 +260,8 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }   
                         }
+
+                        // same as the function above however it is for if the current room is adjacently above the previous room
                         if (a < previousRoom.x)
                         {
                             int x = (int)previousRoom.x;
@@ -294,6 +306,8 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }
                         }
+
+                        // same as the function above however it is for if the current room is adjacently to the right to the previous room
                         if (b > previousRoom.y)
                         {
                             int x = (int)previousRoom.x;
@@ -338,6 +352,8 @@ public class ProceduralManager : MonoBehaviour
                                 Instantiate(lastDungeonFloorRoom, new Vector3(roomPos[a][b].x, roomPos[a][b].y, 0) + corridors[0].transform.position, corridors[0].transform.rotation);
                             }
                         }
+
+                        // same as the function above however it is for if the current room is adjacently to the left to the previous room
                         if (b < previousRoom.y)
                         {
                             int x = (int)previousRoom.x;
@@ -391,8 +407,10 @@ public class ProceduralManager : MonoBehaviour
             }
         }
 
+        // set current room to the room the player will spawn in
         currentRoom = activeRooms[0];
 
+        // make the first room active for enemies
         yield return new WaitForSeconds(4f);
         roomReady.Add(true);
 
@@ -404,16 +422,16 @@ public class ProceduralManager : MonoBehaviour
 
     private IEnumerator RoomOne()
     {
-        Debug.Log("wokingee");
+        // if room one is active and their are no enemies instantiate them and set the correct enemy count 
         if(roomSpawn == true)
         {
-            Debug.Log("wokingeeffff");
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[0], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[0].transform.position, Quaternion.identity));
             EH.spawnedEnemies.Add(Instantiate(enemyDiff1[1], dungeonSpawns[Random.Range(0, 9)].transform.position + activeRooms[0].transform.position + enemyDiff1[1].transform.position, Quaternion.identity));
             EH.enemyCount += 2;
             roomSpawn = false;
         }
 
+        // if all the enemies are dead activate the next room
         if (EH.enemyCount == 0)
         {
             EH.ResetTreeAbility();
@@ -428,6 +446,8 @@ public class ProceduralManager : MonoBehaviour
 
     public IEnumerator RoomTwo()
     {
+
+        // similar to RoomOne coroutine however when the player enters the room instantiate 4 walls to trap the player until all enemies are killed
         if(roomSpawn == true)
         {
             EH.enemyCount += 3;

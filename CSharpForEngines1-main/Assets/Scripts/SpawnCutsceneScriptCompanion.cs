@@ -21,6 +21,7 @@ public class SpawnCutsceneScriptCompanion : MonoBehaviour
 
     private IEnumerator Delay()
     {
+        // when the player is first spawned into the dungeon start a cutscene to show the player what the dungeon map looks like in a cool way
         yield return new WaitForSeconds(4f);
         Vector3 deltaPos = player.transform.position - VC.transform.position;
         float timePassed = 0;

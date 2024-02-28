@@ -29,6 +29,7 @@ public class ShotgunUpgrade : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        // if the player is in range and they press e and have the correct coins allow the player to pickup the shotgun and store that in the save variables script
         if(collision.tag == "Player")
         {
             if (Input.GetKey(KeyCode.E))
@@ -49,6 +50,7 @@ public class ShotgunUpgrade : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // if the player is in range display the correct UI
         if (collision.tag == "Player")
         {
             panelDisplay.SetActive(true);

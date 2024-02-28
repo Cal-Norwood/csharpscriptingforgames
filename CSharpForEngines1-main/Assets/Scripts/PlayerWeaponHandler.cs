@@ -26,6 +26,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     {
         if (weaponInPlay)
         {
+            // get players velocity and depending what it is put the gun in a different posion so that it looks natural
             if(PM.velocity.x > 0.8)
             {
                 lastMove[1] = true;
@@ -64,6 +65,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         Vector2 mousePos;
         Vector2 gunPos;
         float angle;
+        // make the gun rotate to the mouse position of the cursor  depending on what the last move of the player was I.E what direction it is facing
         if (lastMove[0] == true)
         {
             weaponInPlay.transform.parent = holderPosFront.transform;

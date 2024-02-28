@@ -14,6 +14,7 @@ public class LevelDisplayHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get current level from the variable saver
         currentLevel = SV.currentFloor;
         anim.Play("levelDisplay");
     }
@@ -21,6 +22,7 @@ public class LevelDisplayHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // depending on what the current level is disable and enable the correct corresponding level UI displays
         if(currentLevel == 0)
         {
             levelDisplays[0].enabled = true;

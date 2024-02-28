@@ -12,6 +12,7 @@ public class BulletHandler : MonoBehaviour
         StartCoroutine(Delay());    
     }
 
+    // destroying bullet and playing a particle effect when it hits something that is not the player
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag != "Player")
@@ -23,6 +24,7 @@ public class BulletHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // dealing damage if the bullet contacts with an enemy
         if (collision.tag == "Enemy")
         {
             collision.BroadcastMessage("TakeDamage", damage);
@@ -37,6 +39,7 @@ public class BulletHandler : MonoBehaviour
         }
     }
 
+    // if bullet hasn't hit anything destroy after 5 seconds to prevent build up
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(5);

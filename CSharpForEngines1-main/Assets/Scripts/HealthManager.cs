@@ -17,12 +17,14 @@ public class HealthManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // conserve health over floors
         Health = SV.Health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // if health is less than 0 save the players coin amount and fade the camera to black
         if(Health <= 0)
         {
             CM.Play("FadeToBlack");
@@ -33,6 +35,7 @@ public class HealthManager : MonoBehaviour
 
     public void DealDamage(int damage)
     {
+        // if tyhe player is not in their invunrability timer deal damge to them when they take damage then start the invunrable timer
         if(isInvunrable == false)
         {
             isInvunrable = true;
@@ -43,6 +46,7 @@ public class HealthManager : MonoBehaviour
 
     private IEnumerator InvunrableTimer()
     {
+        // make the player flash grey when they are invunrable
         colourchanger.color = new Color(1f, 0f, 0f, 1f);
         yield return new WaitForSeconds(0.2f);
         colourchanger.color = new Color(0.5f, 0.5f, 0.5f, 0.3f);
@@ -57,6 +61,7 @@ public class HealthManager : MonoBehaviour
 
     private IEnumerator WaitForFade()
     {
+        // load death screen on death
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("StatScreen");
     }

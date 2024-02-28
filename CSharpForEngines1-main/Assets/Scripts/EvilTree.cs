@@ -46,6 +46,7 @@ public class EvilTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the enemy is not using its ability allow it to move
         Debug.Log(deathOnce);
         if(abilityPlaying == false)
         {
@@ -60,6 +61,7 @@ public class EvilTree : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // if the enemy touches the player deal damage
         if (abilityPlaying == false && collision.tag == "Player")
         {
             player.BroadcastMessage("DealDamage", 15);
@@ -68,11 +70,13 @@ public class EvilTree : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // make the enemy invunrable when its ability is playing
         if(abilityPlaying == false)
         {
             treeHealth -= damage;
         }
 
+        // when the enemys health is reduced to below 0 destroy the enmy and instantiate coin pickups to drop as loot from the corpse as well as playing the dissolve effect
         if (treeHealth <= 0)
         {
             if(deathOnce == false)
@@ -96,6 +100,7 @@ public class EvilTree : MonoBehaviour
 
     void NavMove()
     {
+        // if the enemy is on a floor greater than once increase its speed
         if ((PM.currentFloor == 1))
         {
             navAgent.speed = 5;
